@@ -18,26 +18,26 @@ async def lifespan(app: FastAPI):
     """
     # Startup
     from core.telemetry import logger
-    logger.info("🚀 Starting GoAI Platform...")
-    
+    logger.info("[START] Starting GoAI Platform...")
+
     # Initialize task queue
     from core.performance import get_task_queue
     task_queue = await get_task_queue()
-    logger.info("✅ Task queue ready", workers=4)
-    
+    logger.info("[OK] Task queue ready", workers=4)
+
     # Initialize cache
     from core.cache import cache
-    logger.info("✅ Cache ready", backend=cache.config.backend)
-    
+    logger.info("[OK] Cache ready", backend=cache.config.backend)
+
     # Initialize telemetry
-    logger.info("✅ Telemetry enabled", features=["metrics", "tracing", "logging"])
-    
+    logger.info("[OK] Telemetry enabled", features=["metrics", "tracing", "logging"])
+
     yield
-    
+
     # Shutdown
-    logger.info("🛑 Shutting down...")
+    logger.info("[STOP] Shutting down...")
     await task_queue.stop()
-    logger.info("✅ Cleanup complete")
+    logger.info("[OK] Cleanup complete")
 
 
 app = FastAPI(

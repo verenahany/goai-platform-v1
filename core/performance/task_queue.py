@@ -93,7 +93,7 @@ class TaskQueue:
             worker = asyncio.create_task(self._worker(f"worker-{i}"))
             self._workers.append(worker)
         
-        print(f"✅ Task queue started with {self.max_workers} workers")
+        print(f"[OK] Task queue started with {self.max_workers} workers")
     
     async def stop(self):
         """Stop all workers."""

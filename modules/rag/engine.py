@@ -125,9 +125,9 @@ Step-back question:"""
             from .storage import document_store, conversation_store
             self.document_store = document_store
             self.conversation_store = conversation_store
-            print("✅ Persistent storage initialized (SQLite)")
+            print("[OK] Persistent storage initialized (SQLite)")
         except Exception as e:
-            print(f"⚠️ Could not initialize persistent storage: {e}")
+            print(f"[WARNING] Could not initialize persistent storage: {e}")
             self.use_persistent_storage = False
     
     def load_from_database(self):

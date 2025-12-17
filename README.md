@@ -1,79 +1,74 @@
-<![CDATA[<div align="center">
+# GoAI Sovereign Platform v1
 
-```
-   ██████╗  ██████╗  █████╗ ██╗    ██████╗ ██╗      █████╗ ████████╗███████╗ ██████╗ ██████╗ ███╗   ███╗
-  ██╔════╝ ██╔═══██╗██╔══██╗██║    ██╔══██╗██║     ██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██╔══██╗████╗ ████║
-  ██║  ███╗██║   ██║███████║██║    ██████╔╝██║     ███████║   ██║   █████╗  ██║   ██║██████╔╝██╔████╔██║
-  ██║   ██║██║   ██║██╔══██║██║    ██╔═══╝ ██║     ██╔══██║   ██║   ██╔══╝  ██║   ██║██╔══██╗██║╚██╔╝██║
-  ╚██████╔╝╚██████╔╝██║  ██║██║    ██║     ███████╗██║  ██║   ██║   ██║     ╚██████╔╝██║  ██║██║ ╚═╝ ██║
-   ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝    ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
-```
+**Enterprise AI Under Your Complete Control**
 
-# 🏛️ Sovereign AI Platform v1
-
-### *Enterprise AI Under Your Complete Control*
-
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
-[![License](https://img.shields.io/badge/License-Enterprise-gold?style=for-the-badge)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-19+-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![License](https://img.shields.io/badge/License-Enterprise-gold?style=flat-square)](LICENSE)
 
 ---
 
-**A fully self-hosted AI infrastructure for organizations that demand data sovereignty, model control, and regulatory compliance.**
+**A production-ready, self-hosted AI infrastructure for organizations that demand data sovereignty, model control, and regulatory compliance.**
 
-[🚀 Quick Start](#-quick-start-5-minutes) • [📖 Documentation](#-documentation) • [🧪 Try It Now](#-try-it-now) • [🔧 API Reference](#-api-reference)
+🚀 [Quick Start](#-quick-start) • 📖 [Documentation](#-documentation) • 🧪 [Try Examples](#-try-it-now) • 🔧 [API Reference](#-complete-api-reference)
 
-</div>
+---
+
+## 📋 Table of Contents
+
+- [What Makes GoAI Different](#-what-makes-goai-different)
+- [Quick Start (5 Minutes)](#-quick-start-5-minutes)
+- [Architecture Overview](#-architecture-overview)
+- [Key Concepts Explained](#-key-concepts-explained)
+  - [AI Agents](#1-ai-agents---autonomous-task-execution)
+  - [RAG Pipeline](#2-rag-retrieval-augmented-generation)
+  - [Multi-Agent Collaboration](#3-multi-agent-collaboration)
+  - [AI Guardrails](#4-ai-guardrails---safety--compliance)
+  - [Human-in-the-Loop](#5-human-in-the-loop-hitl)
+  - [Observability](#6-agent-observability)
+- [Try It Now - Examples](#-try-it-now)
+- [Complete API Reference](#-complete-api-reference)
+- [Project Structure](#-project-structure)
+- [Configuration](#-configuration)
+- [Deployment](#-deployment)
+- [Contributing](#-contributing)
 
 ---
 
 ## ⚡ What Makes GoAI Different?
 
-<table>
-<tr>
-<td width="50%">
+### 🔐 Complete Data Sovereignty
+Your data never leaves your infrastructure. Run LLMs on-premises with full audit trails. Perfect for healthcare, finance, and government sectors.
 
-### 🔐 **Complete Data Sovereignty**
-Your data never leaves your infrastructure. Run LLMs on-premises with full audit trails.
+### 🤖 Production-Ready AI Agents
+- **11 pre-built agent templates** (researcher, code reviewer, data analyst, etc.)
+- **Tool-calling framework** (calculator, web search, Python execution)
+- **Plan-and-Execute pattern** for complex multi-step tasks
+- **Multi-agent collaboration** (sequential, parallel, debate, hierarchical)
 
-</td>
-<td width="50%">
+### 📚 Enterprise RAG with 5 Retrieval Modes
+- **Simple** - Direct Q&A
+- **Conversational** - Multi-turn with history
+- **Multi-Query** - Complex question expansion
+- **Step-Back** - Abstract reasoning
+- **HyDE** - Hypothetical document embeddings
 
-### 🤖 **Production-Ready AI Agents**
-Tool-calling agents, multi-agent collaboration, and Plan-and-Execute patterns out of the box.
+### 🛡️ AI Safety & Governance
+- **Guardrails** - Prompt injection detection, PII redaction, harmful content blocking
+- **Human-in-the-Loop** - Approval workflows for sensitive actions
+- **Observability Dashboard** - Real-time monitoring, cost tracking, execution traces
 
-</td>
-</tr>
-<tr>
-<td width="50%">
+### 📊 Built-in AI Evaluations
+- LLM-as-Judge quality metrics
+- Regression detection
+- Systematic testing frameworks
+- Dataset management
 
-### 📚 **Enterprise RAG**
-Document ingestion, vector search, ACL per document, and multi-mode retrieval strategies.
-
-</td>
-<td width="50%">
-
-### 📊 **Built-in AI Evaluations**
-LLM-as-Judge quality metrics, regression detection, and systematic testing frameworks.
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-### 🎭 **11 Pre-Built Agent Templates**
-Ready-to-use agents for research, code review, data analysis, writing, and more.
-
-</td>
-<td width="50%">
-
-### 👁️ **Agent Observability Dashboard**
-Real-time monitoring, cost tracking, execution traces, and visual analytics.
-
-</td>
-</tr>
-</table>
+### 🔌 Integration & Automation
+- **MCP Protocol** - Standardized tool integration
+- **Webhooks & Triggers** - Event-driven automation
+- **YAML Workflows** - Orchestration with conditional logic
 
 ---
 
@@ -81,209 +76,182 @@ Real-time monitoring, cost tracking, execution traces, and visual analytics.
 
 ### Prerequisites
 
-- Python 3.10+
-- Node.js 18+ (for UI)
-- Optional: OpenAI API key for cloud LLM features
+- **Python 3.10+** (3.12.6 recommended)
+- **Node.js 18+** (for React UI)
+- **OpenAI API Key** (optional - for cloud LLM features)
 
-### 1️⃣ Clone & Install
+### Installation
+
+#### Option 1: Run Directly (Windows - Recommended for Development)
 
 ```bash
-git clone https://github.com/your-org/goai-platform-v1.git
-cd goai-platform-v1
-
-# Install Python dependencies
+# 1. Install Python dependencies
 pip install -r requirements.txt
 
-# Configure environment (optional - enables LLM features)
+# 2. Configure environment
 cp .env.example .env
-# Edit .env and add: OPENAI_API_KEY=sk-your-key
+# Edit .env and add your OpenAI API key
+
+# 3. Start backend server
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+# 4. In a new terminal, start UI
+cd ui/console
+npm install
+npm run dev
 ```
 
-### 2️⃣ Start the Server
+**Quick Start Scripts (Windows):**
+- Double-click `start_server.bat` - Starts backend on port 8000
+- Double-click `start_ui.bat` - Starts UI on port 3000
+
+#### Option 2: Docker Compose (Production)
 
 ```bash
-uvicorn main:app --reload --port 8000
-```
+# Start all services
+docker-compose up -d
 
-### 3️⃣ Verify It's Running
-
-```bash
+# Verify services
 curl http://localhost:8000/health
+```
+
+### Access Points
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Frontend UI** | http://localhost:3000 | React dashboard |
+| **Backend API** | http://localhost:8000 | REST API |
+| **API Docs** | http://localhost:8000/api/docs | Interactive Swagger UI |
+| **Observability** | http://localhost:8000/api/v1/observability/dashboard/html | Agent monitoring |
+
+### Verify Installation
+
+```bash
+# Test health endpoint
+curl http://localhost:8000/health
+
+# Test configuration
+curl http://localhost:8000/config
 ```
 
 **Expected Response:**
 ```json
-{"status": "healthy", "timestamp": "2025-12-07T..."}
-```
-
-### ✅ You're Ready!
-
-Open the interactive API docs: **http://localhost:8000/docs**
-
----
-
-## 🧪 Try It Now
-
-### Test Agent Tools (No API Key Required)
-
-```bash
-# 🧮 Calculator
-curl -X POST http://localhost:8000/api/v1/agents/tools/execute \
-  -H "Content-Type: application/json" \
-  -d '{"tool_name": "calculator", "arguments": {"expression": "(100 * 25) + 500"}}'
-```
-**Response:** `{"result": {"result": 3000}}`
-
-```bash
-# 📅 Get Current Date/Time
-curl -X POST http://localhost:8000/api/v1/agents/tools/execute \
-  -H "Content-Type: application/json" \
-  -d '{"tool_name": "get_datetime", "arguments": {}}'
-```
-
-```bash
-# 🔍 Web Search
-curl -X POST http://localhost:8000/api/v1/agents/tools/execute \
-  -H "Content-Type: application/json" \
-  -d '{"tool_name": "web_search", "arguments": {"query": "FastAPI best practices", "num_results": 3}}'
-```
-
-### Test RAG Pipeline
-
-```bash
-# 📄 Step 1: Ingest a Document
-curl -X POST http://localhost:8000/api/v1/ingest/text \
-  -H "Content-Type: application/json" \
-  -d '{
-    "content": "Our company vacation policy: All employees receive 20 days paid time off per year. Unused days can carry over up to 5 days maximum. Requests must be submitted 2 weeks in advance.",
-    "filename": "vacation_policy.txt"
-  }'
-```
-
-```bash
-# 🔍 Step 2: Query the Document
-curl -X POST http://localhost:8000/api/v1/rag/query \
-  -H "Content-Type: application/json" \
-  -d '{"query": "How many vacation days do employees get?", "top_k": 3}'
-```
-
-### Test Plan-and-Execute Agent (Requires API Key)
-
-```bash
-curl -X POST http://localhost:8000/api/v1/agents/plan-execute \
-  -H "Content-Type: application/json" \
-  -d '{"task": "Calculate the total cost of 15 items at $24.99 each with 8% tax"}'
+{
+  "openai_configured": true,
+  "anthropic_configured": false,
+  "environment": "dev"
+}
 ```
 
 ---
 
 ## 🏗️ Architecture Overview
 
+GoAI uses a **5-layer sovereign stack** architecture:
+
 ```
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                   │
-│                          GoAI SOVEREIGN AI PLATFORM                              │
-│                                                                                   │
-│  ┌─────────────────────────────────────────────────────────────────────────────┐ │
-│  │                         🖥️  USER INTERFACES                                  │ │
-│  │                                                                              │ │
-│  │      React Console  •  REST API  •  Streaming (SSE)  •  Webhooks           │ │
-│  └─────────────────────────────────────────────────────────────────────────────┘ │
-│                                        │                                          │
-│  ┌─────────────────────────────────────────────────────────────────────────────┐ │
-│  │                         🛡️  GATEWAY LAYER                                    │ │
-│  │                                                                              │ │
-│  │      FastAPI  •  Auth/RBAC  •  Rate Limiting  •  Audit Logging            │ │
-│  └─────────────────────────────────────────────────────────────────────────────┘ │
-│                                        │                                          │
-│  ┌─────────────────────────────────────────────────────────────────────────────┐ │
-│  │                         🧠  INTELLIGENCE LAYER                               │ │
-│  │                                                                              │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │ │
-│  │  │ 🤖 Agents    │  │ 📚 RAG       │  │ 🔄 Multi-    │  │ 📊 AI Evals  │   │ │
-│  │  │              │  │    Engine    │  │    Agent     │  │              │   │ │
-│  │  │ • Tools      │  │              │  │              │  │ • LLM Judge  │   │ │
-│  │  │ • Planner    │  │ • Ingest     │  │ • Sequential │  │ • Metrics    │   │ │
-│  │  │ • Memory     │  │ • Retrieve   │  │ • Parallel   │  │ • Datasets   │   │ │
-│  │  │ • Streaming  │  │ • Generate   │  │ • Debate     │  │ • Regression │   │ │
-│  │  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘   │ │
-│  │                                                                              │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │ │
-│  │  │ 🔌 MCP      │  │ 🪝 Triggers  │  │ 🧠 Memory   │  │ 💬 Prompts   │   │ │
-│  │  │   Protocol   │  │   Webhooks   │  │   System     │  │   Library    │   │ │
-│  │  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘   │ │
-│  └─────────────────────────────────────────────────────────────────────────────┘ │
-│                                        │                                          │
-│  ┌─────────────────────────────────────────────────────────────────────────────┐ │
-│  │                         ⚡  INFERENCE LAYER                                   │ │
-│  │                                                                              │ │
-│  │      LLM Router  •  OpenAI  •  Anthropic  •  Ollama  •  vLLM              │ │
-│  └─────────────────────────────────────────────────────────────────────────────┘ │
-│                                        │                                          │
-│  ┌─────────────────────────────────────────────────────────────────────────────┐ │
-│  │                         💾  DATA LAYER                                       │ │
-│  │                                                                              │ │
-│  │      FAISS Vector Store  •  SQLite  •  PostgreSQL  •  Redis Cache         │ │
-│  └─────────────────────────────────────────────────────────────────────────────┘ │
-│                                                                                   │
-└──────────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                   LAYER 5: OPERATIONS                      │
+│    Monitoring • Backups • Disaster Recovery • Deployment  │
+└────────────────────────────────────────────────────────────┘
+                            ↓
+┌────────────────────────────────────────────────────────────┐
+│              LAYER 4: APPLICATIONS (Use Cases)             │
+│  RAG Chat • Policy Assistant • Document Validator         │
+│  Ticket Analyzer • Meeting Notes • KYC Verification       │
+└────────────────────────────────────────────────────────────┘
+                            ↓
+┌────────────────────────────────────────────────────────────┐
+│                  LAYER 3: KNOWLEDGE                        │
+│  Ingestion Pipeline → Extract → Chunk → Embed → Index    │
+│  FAISS Vector Store • ACL • Metadata Store (PostgreSQL)   │
+└────────────────────────────────────────────────────────────┘
+                            ↓
+┌────────────────────────────────────────────────────────────┐
+│                   LAYER 2: GATEWAY                         │
+│  FastAPI Router • Auth (JWT/RBAC) • Rate Limiter         │
+│  Audit Logger • Metrics (Prometheus) • Error Handler      │
+└────────────────────────────────────────────────────────────┘
+                            ↓
+┌────────────────────────────────────────────────────────────┐
+│                  LAYER 1: INFERENCE                        │
+│  LLM Router (OpenAI, Anthropic, Ollama)                  │
+│  GPU Infrastructure (vLLM) • Model Fallback Chain        │
+└────────────────────────────────────────────────────────────┘
+```
+
+### Request Flow Example
+
+**User asks: "What's our vacation policy?"**
+
+```
+1. React UI (Port 3000)
+   ↓ POST /api/v1/rag/query
+
+2. FastAPI Gateway
+   ↓ Auth check → Rate limit → Audit log
+
+3. RAG Engine
+   ↓ Create embedding → Search FAISS → Get top 5 chunks
+
+4. LLM Router
+   ↓ Select provider (OpenAI) → Call GPT-4
+   ↓ Prompt: System + Context + Query
+
+5. OpenAI API
+   ↓ Returns: "Employees receive 20 days PTO per year..."
+
+6. RAG Engine
+   ↓ Add citations → Save to conversation history
+
+7. React UI
+   ✓ Display answer with sources
 ```
 
 ---
 
-## 🤖 AI Agent Framework
+## 💡 Key Concepts Explained
 
-GoAI implements a complete **7-step AI Agent Framework**:
+### 1. AI Agents - Autonomous Task Execution
 
-| Step | Component | What It Does | Location |
-|:----:|-----------|--------------|----------|
-| **1** | 📝 System Prompt | Defines agent behavior and personality | `modules/agents/engine.py` |
-| **2** | 🧠 LLM | Multi-provider routing (OpenAI, Anthropic, Ollama) | `core/llm/router.py` |
-| **3** | 🔧 Tools | Calculator, web search, Python execution, etc. | `modules/agents/tools.py` |
-| **4** | 💾 Memory | Short/medium/long-term persistence | `api/v1/memory.py` |
-| **5** | 🔄 Orchestration | YAML workflows with conditional logic | `core/orchestrator/engine.py` |
-| **6** | 🖥️ UI | React console + REST APIs | `ui/console/` |
-| **7** | 📊 AI Evals | LLM-as-Judge quality measurement | `modules/evals/engine.py` |
+**What they are:**
+AI agents are autonomous programs that can think, act, and iterate until a task is complete.
 
-### Available Agent Tools
+**Capabilities:**
+- 🧠 **Think** - Use LLMs to reason about problems
+- 🔧 **Act** - Call tools (calculator, web search, code execution)
+- 👀 **Observe** - See results and decide next steps
+- 🔄 **Iterate** - Continue until task is complete (max 5 iterations)
 
-| Tool | Description | Example Usage |
-|------|-------------|---------------|
+**Example Agent Execution:**
+
+```
+User: "What's 15% tip on a $125 bill?"
+
+Iteration 1:
+  LLM thinks: "I need to calculate 15% of 125"
+  Calls: calculator("125 * 0.15")
+  Gets: 18.75
+
+Iteration 2:
+  LLM thinks: "I have the answer"
+  Returns: "A 15% tip on $125 is $18.75"
+```
+
+**Code Location:** [`modules/agents/engine.py`](modules/agents/engine.py#L93-L341)
+
+**Available Tools:**
+
+| Tool | Description | Example |
+|------|-------------|---------|
 | `calculator` | Math expressions | `{"expression": "sqrt(144) * 2"}` |
 | `get_datetime` | Current date/time | `{}` |
 | `web_search` | DuckDuckGo search | `{"query": "Python FastAPI", "num_results": 5}` |
-| `execute_python` | Run Python code (sandboxed) | `{"code": "print(sum(range(10)))"}` |
-| `fetch_url` | Fetch webpage content | `{"url": "https://example.com"}` |
+| `execute_python` | Run Python (sandboxed) | `{"code": "print(sum(range(10)))"}` |
+| `fetch_url` | Fetch webpage | `{"url": "https://example.com"}` |
 | `parse_json` | Parse JSON strings | `{"json_string": "{\"key\": \"value\"}"}` |
 
-### Plan-and-Execute Pattern
-
-For complex multi-step tasks:
-
-```
-┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐
-│  TASK   │───▶│  PLAN   │───▶│ EXECUTE │───▶│ REPLAN? │───▶│ RESULT  │
-│         │    │         │    │  Steps  │    │         │    │         │
-└─────────┘    └─────────┘    └─────────┘    └─────────┘    └─────────┘
-                    │              │              │
-                    ▼              ▼              ▼
-              Break into      Use tools      Revise if
-              steps w/deps    per step       step fails
-```
-
-```bash
-# Execute with planning
-curl -X POST http://localhost:8000/api/v1/agents/plan-execute \
-  -H "Content-Type: application/json" \
-  -d '{"task": "Research Python web frameworks and recommend the best one for a startup"}'
-
-# Preview plan only (without execution)
-curl -X POST "http://localhost:8000/api/v1/agents/plan-only?task=Build+a+web+scraper"
-```
-
-### 🎭 Agent Templates
-
-Pre-built agents optimized for specific use cases:
+**11 Pre-built Agent Templates:**
 
 | Template | Pattern | Best For |
 |----------|---------|----------|
@@ -299,282 +267,290 @@ Pre-built agents optimized for specific use cases:
 | `research_team` | Multi-Agent | Team-based research |
 | `code_review_team` | Multi-Agent | Multi-perspective code review |
 
+### 2. RAG (Retrieval-Augmented Generation)
+
+**The Problem:** LLMs don't know about YOUR company's documents, policies, or proprietary data.
+
+**The Solution:** RAG combines document retrieval with LLM generation.
+
+**How It Works:**
+
+```
+┌─────────────────────────────────────────────────────┐
+│                  1. INGEST PHASE                    │
+│                                                     │
+│  Upload PDF/DOCX → Extract Text → Split Chunks     │
+│         ↓                                           │
+│  Create Embeddings → Store in FAISS Vector DB      │
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│                  2. QUERY PHASE                     │
+│                                                     │
+│  User Question → Create Embedding → Search FAISS   │
+│         ↓                                           │
+│  Retrieve Top-K Chunks → Send to LLM with Context  │
+│         ↓                                           │
+│  LLM Generates Answer → Add Citations → Return     │
+└─────────────────────────────────────────────────────┘
+```
+
+**5 Retrieval Modes:**
+
+| Mode | How It Works | Best For |
+|------|--------------|----------|
+| **Simple** | Direct query → retrieve → generate | Basic Q&A |
+| **Conversational** | Includes conversation history | Multi-turn chat |
+| **Multi-Query** | Generates 3-5 variations of query | Complex questions |
+| **Step-Back** | Asks broader question first | Abstract reasoning |
+| **HyDE** | Generates hypothetical answer to search | Semantic matching |
+
+**Code Location:** [`modules/rag/engine.py`](modules/rag/engine.py)
+
+### 3. Multi-Agent Collaboration
+
+**Multiple AI agents working together on complex tasks.**
+
+**Collaboration Patterns:**
+
+#### Sequential (Chain of Specialists)
+```
+Research Agent → Analyzes data
+       ↓
+Writing Agent → Creates report
+       ↓
+Review Agent → Checks quality
+       ↓
+Final Output
+```
+
+#### Parallel (Divide and Conquer)
+```
+Agent 1: Research competitors ─┐
+Agent 2: Analyze pricing ──────├─→ Aggregator → Final Report
+Agent 3: Survey customers ─────┘
+```
+
+#### Debate (Multiple Perspectives)
+```
+Pro Agent: Arguments FOR feature
+Con Agent: Arguments AGAINST feature
+Moderator: Synthesizes both views → Decision
+```
+
+#### Hierarchical (Leader-Worker)
+```
+Manager Agent: Plans & coordinates
+       ↓
+Worker 1 → Task A
+Worker 2 → Task B
+Worker 3 → Task C
+       ↓
+Manager: Aggregates results
+```
+
+**Code Location:** [`modules/agents/multi_agent.py`](modules/agents/multi_agent.py)
+
+### 4. AI Guardrails - Safety & Compliance
+
+**Prevents AI from doing harmful or non-compliant things.**
+
+**Guardrail Categories:**
+
+#### Input Guardrails (Check User Messages)
+- ❌ Prompt injection attempts ("Ignore previous instructions...")
+- ❌ Harmful requests (weapons, illegal activities)
+- ❌ Profanity and offensive language
+
+#### Output Guardrails (Check AI Responses)
+- 🔒 **PII Redaction** - Automatically redacts:
+  - Social Security Numbers (123-45-6789 → [REDACTED])
+  - Credit card numbers
+  - Email addresses
+  - Phone numbers
+- ❌ Harmful content blocking
+- ✅ Compliance checking
+
+#### Tool Guardrails (Control Agent Actions)
+- 🚫 Restrict dangerous tools (e.g., code execution)
+- 💰 Enforce cost limits (max tokens per request)
+- ⏱️ Rate limiting (requests per user/hour)
+
+**Example:**
+
+```json
+Input: "The user's SSN is 123-45-6789 and email is john@example.com"
+
+After Guardrails:
+{
+  "content": "The user's SSN is [REDACTED] and email is [REDACTED]",
+  "modified": true,
+  "violations": ["pii_detected"]
+}
+```
+
+**Code Location:** [`modules/agents/guardrails.py`](modules/agents/guardrails.py)
+
+### 5. Human-in-the-Loop (HITL)
+
+**Requires human approval before sensitive actions.**
+
+**How It Works:**
+
+```
+Agent wants to: "Delete 10,000 customer records"
+       ↓
+HITL System:
+  1. Pauses agent execution
+  2. Creates approval request
+  3. Notifies admin (email/webhook)
+  4. Waits for response (timeout: 2 hours)
+       ↓
+Admin Decision:
+  ✅ Approve → Agent continues
+  ❌ Reject → Agent stops with error
+  ⏱️ Timeout → Auto-reject
+```
+
+**Built-in Approval Policies:**
+
+| Category | Actions | Timeout |
+|----------|---------|---------|
+| **High Risk** | payment, delete, sensitive_data | 2 hours |
+| **External** | send_email, external_api, publish | 1 hour |
+| **Data Modification** | database_modify, file_write | 30 min |
+| **Cost Control** | high_cost (>$10) | 1 hour |
+
+**Code Location:** [`modules/agents/hitl.py`](modules/agents/hitl.py)
+
+### 6. Agent Observability
+
+**Real-time monitoring and analytics for all agent operations.**
+
+**What It Tracks:**
+
+- 📊 **Execution Traces** - Every step an agent takes
+- 💰 **Cost Tracking** - Automatic per-model cost calculation
+  - GPT-4: ~$0.03 per 1K input tokens
+  - GPT-3.5: ~$0.0015 per 1K input tokens
+- 🔧 **Tool Usage** - Which tools are called most
+- ⚠️ **Error Monitoring** - Real-time failure tracking
+- 📈 **Performance Metrics** - Response times, success rates
+- 🔴 **Live Streaming** - SSE events for real-time updates
+
+**Dashboard Access:**
+- Visual: http://localhost:8000/api/v1/observability/dashboard/html
+- API: http://localhost:8000/api/v1/observability/dashboard
+
+**Code Location:** [`modules/agents/observability.py`](modules/agents/observability.py)
+
+---
+
+## 🧪 Try It Now
+
+### 1. Test Agent Tools (No API Key Required)
+
+```bash
+# Calculator
+curl -X POST http://localhost:8000/api/v1/agents/tools/execute \
+  -H "Content-Type: application/json" \
+  -d '{"tool_name": "calculator", "arguments": {"expression": "(100 * 25) + 500"}}'
+# Returns: {"result": 3000}
+
+# Get Current Date/Time
+curl -X POST http://localhost:8000/api/v1/agents/tools/execute \
+  -H "Content-Type: application/json" \
+  -d '{"tool_name": "get_datetime", "arguments": {}}'
+
+# Web Search
+curl -X POST http://localhost:8000/api/v1/agents/tools/execute \
+  -H "Content-Type: application/json" \
+  -d '{"tool_name": "web_search", "arguments": {"query": "FastAPI best practices", "num_results": 3}}'
+```
+
+### 2. Test RAG Pipeline (Requires API Key)
+
+```bash
+# Step 1: Ingest a Document
+curl -X POST http://localhost:8000/api/v1/ingest/text \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "Our company vacation policy: All employees receive 20 days paid time off per year. Unused days can carry over up to 5 days maximum. Requests must be submitted 2 weeks in advance.",
+    "filename": "vacation_policy.txt"
+  }'
+
+# Step 2: Query the Document
+curl -X POST http://localhost:8000/api/v1/rag/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "How many vacation days do employees get?",
+    "mode": "simple"
+  }'
+# Returns answer with source citations
+```
+
+### 3. Test AI Agent with Plan-and-Execute
+
+```bash
+curl -X POST http://localhost:8000/api/v1/agents/plan-execute \
+  -H "Content-Type: application/json" \
+  -d '{
+    "task": "Research the top 3 Python web frameworks and compare their features"
+  }'
+```
+
+### 4. Test Agent Template
+
 ```bash
 # List all templates
 curl http://localhost:8000/api/v1/agents/templates
 
-# Get template details
-curl http://localhost:8000/api/v1/agents/templates/researcher
-
-# Run a template
+# Run the "writer" template
 curl -X POST http://localhost:8000/api/v1/agents/templates/writer/run \
   -H "Content-Type: application/json" \
-  -d '{"task": "Write a tagline for a coffee shop called Bean There", "template_id": "writer"}'
-```
-
----
-
-## 🛡️ Human-in-the-Loop (HITL) Approvals
-
-Pause agent workflows for human review of sensitive actions:
-
-### Built-in Approval Policies
-
-| Policy | Categories | Default Timeout |
-|--------|------------|-----------------|
-| **High Risk** | payment, delete, sensitive_data | 2 hours |
-| **External** | send_email, external_api, publish | 1 hour |
-| **Data Modification** | database_modify, file_write | 30 min |
-| **Cost Control** | high_cost | 1 hour |
-
-### HITL API Examples
-
-```bash
-# Create an approval request
-curl -X POST http://localhost:8000/api/v1/approvals/requests \
-  -H "Content-Type: application/json" \
   -d '{
-    "action": "Send promotional email to 10,000 customers",
-    "category": "send_email",
-    "agent_id": "marketing-agent"
+    "task": "Write a professional email to a client apologizing for a delayed shipment",
+    "template_id": "writer"
   }'
-
-# List pending approvals
-curl http://localhost:8000/api/v1/approvals/pending
-
-# Approve a request
-curl -X POST http://localhost:8000/api/v1/approvals/requests/{id}/approve \
-  -H "Content-Type: application/json" \
-  -d '{"reason": "Approved for December campaign", "responded_by": "admin@example.com"}'
-
-# Reject a request
-curl -X POST http://localhost:8000/api/v1/approvals/requests/{id}/reject \
-  -H "Content-Type: application/json" \
-  -d '{"reason": "Needs legal review first"}'
-
-# Check if approval is required
-curl -X POST http://localhost:8000/api/v1/approvals/check \
-  -H "Content-Type: application/json" \
-  -d '{"category": "payment", "context": {"amount": 500}}'
 ```
 
----
-
-## 🛡️ AI Guardrails
-
-Comprehensive safety guardrails for AI agent operations:
-
-### Guardrail Types
-
-| Type | Description | Action |
-|------|-------------|--------|
-| **Prompt Injection** | Detects manipulation attempts | Block |
-| **Harmful Content** | Blocks dangerous requests | Block |
-| **PII Detection** | Detects SSN, credit cards, emails | Redact |
-| **Profanity Filter** | Filters inappropriate language | Modify |
-| **Tool Restrictions** | Controls dangerous tool usage | Require Approval |
-| **Cost Limits** | Token/request limits | Block |
-| **Rate Limiting** | Prevents abuse | Block |
-
-### Guardrails API Examples
+### 5. Test Guardrails
 
 ```bash
-# Check user input for safety
-curl -X POST http://localhost:8000/api/v1/guardrails/check/input \
-  -H "Content-Type: application/json" \
-  -d '{"content": "User message here", "user_id": "user-123"}'
-
-# Check AI output (with PII redaction)
+# Check for PII in output
 curl -X POST http://localhost:8000/api/v1/guardrails/check/output \
   -H "Content-Type: application/json" \
-  -d '{"content": "The SSN is 123-45-6789"}'
-# Returns: {"content": "The SSN is [REDACTED]", "modified": true}
-
-# Check if tool call is allowed
-curl -X POST http://localhost:8000/api/v1/guardrails/check/tool \
-  -H "Content-Type: application/json" \
-  -d '{"tool_name": "execute_python", "arguments": {}}'
-
-# List all rules
-curl http://localhost:8000/api/v1/guardrails/rules
-
-# Get guardrail statistics
-curl http://localhost:8000/api/v1/guardrails/stats
-
-# View recent violations
-curl http://localhost:8000/api/v1/guardrails/violations
-```
-
----
-
-## 👁️ Agent Observability Dashboard
-
-Real-time monitoring and analytics for all agent operations:
-
-### Features
-
-- 📊 **Execution Traces** - Track every step of agent execution
-- 💰 **Cost Tracking** - Automatic cost estimation per model
-- 🔧 **Tool Analytics** - Usage statistics for all tools
-- ⚠️ **Error Monitoring** - Real-time error tracking
-- 📈 **Hourly Statistics** - Activity trends and patterns
-- 🔴 **Live Streaming** - SSE events for real-time updates
-
-### Dashboard Access
-
-```bash
-# Visual HTML Dashboard
-open http://localhost:8000/api/v1/observability/dashboard/html
-
-# Dashboard API data
-curl http://localhost:8000/api/v1/observability/dashboard
-
-# List traces
-curl http://localhost:8000/api/v1/observability/traces
-
-# Active traces
-curl http://localhost:8000/api/v1/observability/traces/active
-
-# Tool usage stats
-curl http://localhost:8000/api/v1/observability/stats/tools
-
-# Cost breakdown
-curl http://localhost:8000/api/v1/observability/stats/cost
-
-# Real-time event stream (SSE)
-curl http://localhost:8000/api/v1/observability/stream
-```
-
----
-
-## 📚 RAG (Retrieval-Augmented Generation)
-
-### Retrieval Modes
-
-| Mode | Best For | How It Works |
-|------|----------|--------------|
-| **Simple** | Basic Q&A | Direct query → retrieve → generate |
-| **Conversational** | Multi-turn chat | Includes conversation history |
-| **Multi-Query** | Complex questions | Generates multiple search queries |
-| **Step-Back** | Abstract reasoning | Asks broader questions first |
-| **HyDE** | Semantic matching | Generates hypothetical answer to search |
-
-### RAG API Examples
-
-```bash
-# Simple query
-curl -X POST http://localhost:8000/api/v1/rag/query \
-  -H "Content-Type: application/json" \
-  -d '{"query": "What is our refund policy?", "mode": "simple"}'
-
-# Conversational RAG with history
-curl -X POST http://localhost:8000/api/v1/rag/chat \
-  -H "Content-Type: application/json" \
   -d '{
-    "query": "What about for digital products?",
-    "conversation_id": "conv-123",
-    "mode": "conversational"
+    "content": "The customer SSN is 123-45-6789 and their email is john.doe@example.com"
   }'
-
-# Multi-query for complex questions
-curl -X POST http://localhost:8000/api/v1/rag/query \
-  -H "Content-Type: application/json" \
-  -d '{"query": "Compare our vacation and remote work policies", "mode": "multi_query"}'
+# Returns: Content with [REDACTED] replacements
 ```
 
----
-
-## 🔌 MCP Protocol (Model Context Protocol)
-
-Standardized tool integration for AI interoperability:
+### 6. Test Multi-Agent Collaboration
 
 ```bash
-# List available MCP tools
-curl http://localhost:8000/api/v1/mcp/tools
-
-# Execute via MCP protocol
-curl -X POST http://localhost:8000/api/v1/mcp/execute \
-  -H "Content-Type: application/json" \
-  -d '{"name": "calculator", "arguments": {"expression": "2 + 2"}}'
-
-# Get execution statistics
-curl http://localhost:8000/api/v1/mcp/stats
-```
-
----
-
-## 🪝 Webhooks & Triggers
-
-Event-driven automation:
-
-```bash
-# Create a webhook
-curl -X POST http://localhost:8000/api/v1/triggers/webhooks \
+curl -X POST http://localhost:8000/api/v1/multi-agent/run \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Document Processor",
-    "description": "Process documents on upload",
-    "action": "rag_query",
-    "action_params": {"top_k": 5},
-    "secret": "my-webhook-secret"
-  }'
-
-# List webhooks
-curl http://localhost:8000/api/v1/triggers/webhooks
-
-# Trigger a webhook
-curl -X POST http://localhost:8000/api/v1/triggers/webhooks/{webhook_id}/trigger \
-  -H "X-Signature: sha256=..." \
-  -H "Content-Type: application/json" \
-  -d '{"query": "Process this document"}'
-```
-
----
-
-## 📊 AI Evaluations
-
-Systematic quality measurement:
-
-```bash
-# List available metrics
-curl http://localhost:8000/api/v1/evals/metrics
-
-# Create an evaluation dataset
-curl -X POST http://localhost:8000/api/v1/evals/datasets \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Customer Support QA",
-    "description": "Test cases for support bot",
-    "test_cases": [
-      {
-        "query": "How do I reset my password?",
-        "expected": "Go to Settings > Security > Reset Password",
-        "tags": ["account", "security"]
-      },
-      {
-        "query": "What are your business hours?",
-        "expected": "Monday-Friday 9AM-5PM EST",
-        "tags": ["general"]
-      }
+    "task": "Analyze the pros and cons of implementing a new feature",
+    "pattern": "debate",
+    "agents": [
+      {"role": "advocate", "system_prompt": "You argue FOR the feature"},
+      {"role": "critic", "system_prompt": "You argue AGAINST the feature"}
     ]
   }'
-
-# Run evaluation
-curl -X POST http://localhost:8000/api/v1/evals/run \
-  -H "Content-Type: application/json" \
-  -d '{"dataset_id": "dataset-123", "model": "gpt-4o-mini"}'
 ```
 
 ---
 
 ## 🔧 Complete API Reference
 
-> **32 API modules** covering all platform capabilities
+### 📊 API Module Overview
 
-### Quick Overview: All Services
+**32 API modules** covering all platform capabilities:
 
-| Category | Services | Count |
-|----------|----------|:-----:|
+| Category | Modules | Count |
+|----------|---------|:-----:|
 | **🧠 Intelligence** | LLM, Streaming, Agents, Multi-Agent, Plan-Execute, Templates | 6 |
 | **📚 Knowledge** | RAG, Ingest, Retrieve, Memory | 4 |
 | **📊 Analysis** | Sentiment, SQL Agent, Validator, OCR | 4 |
@@ -584,335 +560,169 @@ curl -X POST http://localhost:8000/api/v1/evals/run \
 | **🔐 Platform** | Auth, Upload, Export, Prompts, Performance, Telemetry | 6 |
 | **🎯 Domain** | EBC Tickets, Customer KYC, Meeting Notes | 3 |
 
----
-
-### 🏥 Core Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/health` | GET | Health check |
-| `/config` | GET | Configuration status |
-| `/docs` | GET | Interactive Swagger docs |
-| `/redoc` | GET | ReDoc API docs |
-
----
-
-### 🧠 LLM & Streaming
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/llm/chat` | POST | Chat completion |
-| `/api/v1/llm/complete` | POST | Text completion |
-| `/api/v1/llm/providers` | GET | List LLM providers |
-| `/api/v1/stream/chat` | POST | Streaming chat (SSE) |
-| `/api/v1/stream/complete` | POST | Streaming completion |
-
----
-
-### 📚 RAG & Knowledge
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/rag/query` | POST | Query with RAG |
-| `/api/v1/rag/chat` | POST | Conversational RAG |
-| `/api/v1/rag/ask` | POST | Quick Q&A |
-| `/api/v1/rag/stats` | GET | RAG statistics |
-| `/api/v1/rag/documents` | GET | List documents |
-| `/api/v1/rag/conversation` | POST | Create conversation |
-| `/api/v1/ingest/text` | POST | Ingest text content |
-| `/api/v1/ingest/document` | POST | Upload file document |
-| `/api/v1/retrieve/` | POST | Semantic search |
-| `/api/v1/retrieve/hybrid` | POST | Hybrid search |
+### 🤖 AI Agents Endpoints
 
----
-
-### 🤖 AI Agents
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/agents/run` | POST | Run agent |
-| `/api/v1/agents/stream` | POST | Stream agent (SSE) |
-| `/api/v1/agents/plan-execute` | POST | Plan-and-Execute agent |
-| `/api/v1/agents/plan-only` | POST | Create plan without executing |
-| `/api/v1/agents/tools` | GET | List available tools |
-| `/api/v1/agents/tools/execute` | POST | Execute tool directly |
-| `/api/v1/agents/ask` | GET | Quick question |
-| `/api/v1/agents/templates` | GET | List agent templates |
-| `/api/v1/agents/templates/categories` | GET | List template categories |
-| `/api/v1/agents/templates/{id}` | GET | Get template details |
-| `/api/v1/agents/templates/{id}/run` | POST | Run agent from template |
-| `/api/v1/agents/templates/{id}/examples` | GET | Get example prompts |
-
----
-
-### 👥 Multi-Agent Collaboration
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/multi-agent/session` | POST | Create multi-agent session |
-| `/api/v1/multi-agent/run` | POST | Run multi-agent task |
-| `/api/v1/multi-agent/patterns` | GET | List collaboration patterns |
-
----
-
-### 💾 Memory System
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/memory` | GET | List user memories |
-| `/api/v1/memory` | POST | Create memory |
-| `/api/v1/memory/{id}` | GET | Get memory by ID |
-| `/api/v1/memory/{id}` | PUT | Update memory |
-| `/api/v1/memory/{id}` | DELETE | Delete memory |
-| `/api/v1/memory/search` | POST | Search memories |
-
----
-
-### 📊 Sentiment Analysis
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/sentiment/analyze` | POST | Analyze text sentiment |
-| `/api/v1/sentiment/batch` | POST | Batch sentiment analysis |
-| `/api/v1/sentiment/aspects` | POST | Aspect-based sentiment |
-
----
-
-### 🗄️ SQL Agent
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/sql/query` | POST | Natural language to SQL |
-| `/api/v1/sql/execute` | POST | Execute SQL query |
-| `/api/v1/sql/schema` | GET | Get database schema |
-| `/api/v1/sql/tables` | GET | List tables |
-
----
-
-### ✅ Document Validator
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/validator/validate` | POST | Validate document |
-| `/api/v1/validator/rules` | GET | List validation rules |
-| `/api/v1/validator/compare` | POST | Compare documents |
-
----
-
-### 🔄 Orchestrator (Workflows)
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/orchestrator/workflows` | GET | List workflows |
-| `/api/v1/orchestrator/workflows/execute` | POST | Execute workflow |
-| `/api/v1/orchestrator/actions` | GET | List available actions |
-
----
-
-### 📈 AI Evaluations
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/evals/datasets` | GET/POST | Manage datasets |
-| `/api/v1/evals/datasets/{id}` | GET/DELETE | Dataset by ID |
-| `/api/v1/evals/metrics` | GET | List evaluation metrics |
-| `/api/v1/evals/run` | POST | Run evaluation |
-| `/api/v1/evals/runs` | GET | List evaluation runs |
-
----
-
-### 🔌 MCP Protocol
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/mcp/info` | GET | Server info |
-| `/api/v1/mcp/tools` | GET | List MCP tools |
-| `/api/v1/mcp/execute` | POST | Execute via MCP |
-| `/api/v1/mcp/stats` | GET | Execution statistics |
-| `/api/v1/mcp/client/servers` | GET/POST | Manage remote servers |
-| `/api/v1/mcp/client/tools` | GET | List remote tools |
-
----
-
-### 🪝 Triggers & Webhooks
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/triggers/webhooks` | GET/POST | Manage webhooks |
-| `/api/v1/triggers/webhooks/{id}` | GET/PUT/DELETE | Webhook by ID |
-| `/api/v1/triggers/webhooks/{id}/trigger` | POST | Fire webhook |
-| `/api/v1/triggers/event-types` | GET | List event types |
-| `/api/v1/triggers/quick-trigger` | POST | Quick action trigger |
-
----
-
-### 🛡️ AI Guardrails
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/guardrails/` | GET | System info |
-| `/api/v1/guardrails/check/input` | POST | Check user input safety |
-| `/api/v1/guardrails/check/output` | POST | Check AI output safety |
-| `/api/v1/guardrails/check/tool` | POST | Check tool call permission |
-| `/api/v1/guardrails/check/cost` | POST | Check cost limits |
-| `/api/v1/guardrails/rules` | GET | List all rules |
-| `/api/v1/guardrails/rules/{name}` | GET | Get rule details |
-| `/api/v1/guardrails/rules/{name}/enable` | PUT | Enable a rule |
-| `/api/v1/guardrails/rules/{name}/disable` | PUT | Disable a rule |
-| `/api/v1/guardrails/config` | GET/PUT | Get/update configuration |
-| `/api/v1/guardrails/stats` | GET | Get statistics |
-| `/api/v1/guardrails/violations` | GET | Get recent violations |
-
----
-
-### 👤 Human-in-the-Loop Approvals
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/approvals/` | GET | System info |
-| `/api/v1/approvals/pending` | GET | List pending approvals |
-| `/api/v1/approvals/requests` | GET/POST | Manage requests |
-| `/api/v1/approvals/requests/{id}` | GET | Get request details |
-| `/api/v1/approvals/requests/{id}/approve` | POST | Approve request |
-| `/api/v1/approvals/requests/{id}/reject` | POST | Reject request |
-| `/api/v1/approvals/requests/{id}/cancel` | POST | Cancel request |
-| `/api/v1/approvals/check` | POST | Check if approval required |
-| `/api/v1/approvals/policies` | GET/POST | Manage policies |
-| `/api/v1/approvals/policies/{id}` | GET/DELETE | Policy by ID |
-| `/api/v1/approvals/stats` | GET | Approval statistics |
-| `/api/v1/approvals/audit` | GET | Audit log |
-
----
-
-### 👁️ Agent Observability
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/observability/` | GET | System info |
-| `/api/v1/observability/dashboard` | GET | Dashboard data (JSON) |
-| `/api/v1/observability/dashboard/html` | GET | Visual dashboard (HTML) |
-| `/api/v1/observability/traces` | GET | List traces |
-| `/api/v1/observability/traces/active` | GET | Active traces |
-| `/api/v1/observability/traces/{id}` | GET | Trace details with events |
-| `/api/v1/observability/stats` | GET | Aggregated statistics |
-| `/api/v1/observability/stats/tools` | GET | Tool usage stats |
-| `/api/v1/observability/stats/models` | GET | Model usage stats |
-| `/api/v1/observability/stats/cost` | GET | Cost breakdown |
-| `/api/v1/observability/errors` | GET | Recent errors |
-| `/api/v1/observability/stream` | GET | Real-time SSE stream |
-
----
-
-### 💬 Prompt Library
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/prompts` | GET | List prompts |
-| `/api/v1/prompts` | POST | Create prompt |
-| `/api/v1/prompts/{id}` | GET/PUT/DELETE | Manage prompt |
-| `/api/v1/prompts/{id}/execute` | POST | Execute prompt |
-| `/api/v1/prompts/{id}/preview` | POST | Preview with variables |
-
----
-
-### 📝 Feedback Collection
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/feedback` | GET/POST | Manage feedback |
-| `/api/v1/feedback/{id}` | GET/PUT/DELETE | Feedback by ID |
-| `/api/v1/feedback/stats` | GET | Feedback statistics |
-| `/api/v1/feedback/export` | GET | Export feedback data |
-
----
-
-### 🔐 Authentication
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/auth/login` | POST | User login |
-| `/api/v1/auth/logout` | POST | User logout |
-| `/api/v1/auth/me` | GET | Current user info |
-| `/api/v1/auth/refresh` | POST | Refresh token |
-
----
-
-### 📤 File Operations
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/upload/file` | POST | Upload file |
-| `/api/v1/upload/batch` | POST | Batch upload |
-| `/api/v1/export/documents` | GET | Export documents |
-| `/api/v1/export/data` | POST | Export data |
-
----
-
-### 📊 Telemetry & Performance
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/telemetry/overview` | GET | System overview |
-| `/api/v1/telemetry/metrics` | GET | Detailed metrics |
-| `/api/v1/telemetry/traces` | GET | Request traces |
-| `/api/v1/performance/stats` | GET | Performance stats |
-| `/api/v1/performance/cache` | GET/DELETE | Cache management |
-
----
-
-### 🎫 Domain: EBC Tickets
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/ebc-tickets/` | GET/POST | Manage tickets |
-| `/api/v1/ebc-tickets/{id}` | GET/PUT | Ticket by ID |
-| `/api/v1/ebc-tickets/analyze` | POST | Analyze ticket |
-| `/api/v1/ebc-tickets/stats` | GET | Ticket statistics |
-
----
-
-### 🪪 Domain: Customer KYC
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/kyc/verify` | POST | Verify customer |
-| `/api/v1/kyc/documents` | POST | Submit KYC documents |
-| `/api/v1/kyc/status/{id}` | GET | Check KYC status |
-| `/api/v1/kyc/risk-score` | POST | Calculate risk score |
-
----
-
-### 📝 Domain: Meeting Notes
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/meeting-notes/` | GET | Service info |
-| `/api/v1/meeting-notes/summarize` | POST | Summarize meeting notes |
-| `/api/v1/meeting-notes/action-items` | POST | Extract action items |
-| `/api/v1/meeting-notes/format/markdown` | POST | Format as markdown |
-| `/api/v1/meeting-notes/meetings` | GET | List meetings |
-| `/api/v1/meeting-notes/meetings/{id}` | GET | Get meeting by ID |
-| `/api/v1/meeting-notes/search` | GET | Search meetings |
-
----
-
-### 📷 OCR (Document Scanning)
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/ocr/extract` | POST | Extract text from image |
-| `/api/v1/ocr/batch` | POST | Batch OCR processing |
-| `/api/v1/ocr/structured` | POST | Extract structured data |
-
----
-
-### 📋 Activity Logging
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1/activity` | GET | List activities |
-| `/api/v1/activity/user/{user_id}` | GET | User activities |
-| `/api/v1/activity/stats` | GET | Activity statistics |
+```bash
+# Run agent
+POST /api/v1/agents/run
+Body: {"task": "Your task", "tools": ["calculator", "web_search"]}
+
+# Stream agent execution (SSE)
+POST /api/v1/agents/stream
+
+# Plan-and-Execute
+POST /api/v1/agents/plan-execute
+Body: {"task": "Complex multi-step task"}
+
+# List available tools
+GET /api/v1/agents/tools
+
+# Execute tool directly
+POST /api/v1/agents/tools/execute
+
+# List agent templates
+GET /api/v1/agents/templates
+
+# Run agent from template
+POST /api/v1/agents/templates/{template_id}/run
+```
+
+### 📚 RAG & Knowledge Endpoints
+
+```bash
+# Simple RAG query
+POST /api/v1/rag/query
+Body: {"query": "Your question", "mode": "simple", "top_k": 5}
+
+# Conversational RAG (with history)
+POST /api/v1/rag/chat
+Body: {"query": "Follow-up question", "conversation_id": "conv-123"}
+
+# Ingest text
+POST /api/v1/ingest/text
+Body: {"content": "Document text", "filename": "doc.txt"}
+
+# Ingest document (PDF, DOCX, etc.)
+POST /api/v1/ingest/document
+Form-data: file
+
+# Semantic search (without generation)
+POST /api/v1/retrieve/
+Body: {"query": "Search query", "top_k": 10}
+
+# Get RAG statistics
+GET /api/v1/rag/stats
+```
+
+### 🛡️ AI Guardrails Endpoints
+
+```bash
+# Check user input safety
+POST /api/v1/guardrails/check/input
+Body: {"content": "User message", "user_id": "user-123"}
+
+# Check AI output (with PII redaction)
+POST /api/v1/guardrails/check/output
+Body: {"content": "AI response"}
+
+# Check if tool call is allowed
+POST /api/v1/guardrails/check/tool
+Body: {"tool_name": "execute_python", "user_id": "user-123"}
+
+# List all guardrail rules
+GET /api/v1/guardrails/rules
+
+# Get statistics
+GET /api/v1/guardrails/stats
+
+# View recent violations
+GET /api/v1/guardrails/violations
+```
+
+### 👤 Human-in-the-Loop Endpoints
+
+```bash
+# Create approval request
+POST /api/v1/approvals/requests
+Body: {"action": "Delete records", "category": "delete"}
+
+# List pending approvals
+GET /api/v1/approvals/pending
+
+# Approve request
+POST /api/v1/approvals/requests/{id}/approve
+Body: {"reason": "Approved by admin", "responded_by": "admin@example.com"}
+
+# Reject request
+POST /api/v1/approvals/requests/{id}/reject
+
+# Check if approval required
+POST /api/v1/approvals/check
+Body: {"category": "payment", "context": {"amount": 500}}
+```
+
+### 👁️ Observability Endpoints
+
+```bash
+# Visual dashboard (HTML)
+GET /api/v1/observability/dashboard/html
+
+# Dashboard data (JSON)
+GET /api/v1/observability/dashboard
+
+# List execution traces
+GET /api/v1/observability/traces
+
+# Get trace details
+GET /api/v1/observability/traces/{trace_id}
+
+# Tool usage statistics
+GET /api/v1/observability/stats/tools
+
+# Cost breakdown
+GET /api/v1/observability/stats/cost
+
+# Real-time event stream (SSE)
+GET /api/v1/observability/stream
+```
+
+### 👥 Multi-Agent Endpoints
+
+```bash
+# Run multi-agent task
+POST /api/v1/multi-agent/run
+Body: {
+  "task": "Your task",
+  "pattern": "sequential|parallel|debate|hierarchical",
+  "agents": [...]
+}
+
+# List collaboration patterns
+GET /api/v1/multi-agent/patterns
+```
+
+### 📊 AI Evaluations Endpoints
+
+```bash
+# Create evaluation dataset
+POST /api/v1/evals/datasets
+Body: {
+  "name": "Test Dataset",
+  "test_cases": [...]
+}
+
+# Run evaluation
+POST /api/v1/evals/run
+Body: {"dataset_id": "dataset-123", "model": "gpt-4"}
+
+# List metrics
+GET /api/v1/evals/metrics
+
+# Get evaluation results
+GET /api/v1/evals/runs
+```
+
+For complete API documentation, visit: **http://localhost:8000/api/docs**
 
 ---
 
@@ -921,60 +731,299 @@ curl -X POST http://localhost:8000/api/v1/evals/run \
 ```
 goai-platform-v1/
 │
-├── 📄 main.py                    # FastAPI application entry point
-├── 📄 requirements.txt           # Python dependencies
-├── 📄 .env.example               # Environment template
+├── main.py                      # FastAPI entry point - 121 lines
+├── requirements.txt             # Python dependencies - 71 packages
+├── .env                         # Configuration (API keys, database)
+├── docker-compose.yaml          # Multi-container orchestration
 │
-├── 📂 api/v1/                    # REST API endpoints
-│   ├── agents.py                 # Agent operations
-│   ├── rag.py                    # RAG operations
-│   ├── memory.py                 # Memory system
-│   ├── evals.py                  # AI evaluations
-│   ├── mcp.py                    # MCP protocol
-│   ├── triggers.py               # Webhooks/triggers
-│   └── ...
+├── start_server.bat             # Windows: Start backend
+├── start_ui.bat                 # Windows: Start frontend
 │
-├── 📂 core/                      # Core infrastructure
-│   ├── llm/                      # LLM routing
-│   ├── vector/                   # Vector store
-│   ├── auth/                     # Authentication
-│   ├── orchestrator/             # Workflow engine
-│   └── telemetry/                # Metrics & logging
+├── api/v1/                      # REST API Layer (32 modules, ~10,641 lines)
+│   ├── agents.py                # Agent execution endpoints
+│   ├── rag.py                   # RAG query endpoints
+│   ├── llm.py                   # Direct LLM access
+│   ├── stream.py                # SSE streaming
+│   ├── memory.py                # User memory system
+│   ├── evals.py                 # AI evaluations
+│   ├── mcp.py                   # Model Context Protocol
+│   ├── triggers.py              # Webhooks & automation
+│   ├── guardrails.py            # AI safety controls
+│   ├── approvals.py             # Human-in-the-Loop
+│   ├── observability.py         # Agent monitoring
+│   ├── meeting_notes.py         # Meeting summarization
+│   └── [20 more modules...]
 │
-├── 📂 modules/                   # Feature modules
-│   ├── agents/                   # Agent engine & tools
-│   │   ├── engine.py             # Main agent logic
-│   │   ├── tools.py              # Tool registry
-│   │   ├── planner.py            # Plan-and-Execute
-│   │   ├── templates.py          # 11 pre-built agent templates
-│   │   ├── hitl.py               # Human-in-the-Loop approvals
-│   │   ├── observability.py      # Agent monitoring & tracing
-│   │   ├── guardrails.py         # AI safety guardrails
-│   │   └── multi_agent.py        # Multi-agent collaboration
-│   ├── rag/                      # RAG pipeline
-│   ├── evals/                    # Evaluation engine
-│   ├── mcp/                      # MCP server/client
-│   ├── meeting_notes/            # Meeting summarization
-│   └── ...
+├── core/                        # Core Infrastructure
+│   ├── llm/
+│   │   ├── router.py            # Multi-provider LLM routing
+│   │   └── ollama.py            # Local model support
+│   ├── vector/
+│   │   └── retriever.py         # FAISS vector search
+│   ├── auth/                    # JWT authentication & RBAC
+│   ├── cache/                   # Redis caching layer
+│   ├── database/                # SQLAlchemy ORM
+│   ├── orchestrator/            # YAML workflow engine
+│   ├── telemetry/               # Metrics & tracing
+│   ├── performance/             # Optimization utilities
+│   ├── security/                # Security controls
+│   └── audit/                   # Audit logging
 │
-├── 📂 ui/console/                # React frontend
-│   ├── src/pages/                # Page components
-│   └── src/components/           # Shared components
+├── modules/                     # Feature Modules
+│   ├── agents/                  # AI Agent Framework
+│   │   ├── engine.py            # Core agent logic (341 lines)
+│   │   ├── tools.py             # Tool registry (calculator, web, etc.)
+│   │   ├── planner.py           # Plan-and-Execute pattern
+│   │   ├── templates.py         # 11 pre-built agent templates
+│   │   ├── multi_agent.py       # Multi-agent collaboration
+│   │   ├── guardrails.py        # AI safety guardrails
+│   │   ├── hitl.py              # Human-in-the-Loop approvals
+│   │   └── observability.py     # Agent monitoring & tracing
+│   │
+│   ├── rag/                     # RAG Pipeline
+│   │   ├── engine.py            # 5 retrieval modes
+│   │   ├── advanced.py          # Advanced RAG patterns
+│   │   └── storage.py           # Persistent storage
+│   │
+│   ├── ingestion/               # Document Processing
+│   ├── retrieval/               # Semantic Search
+│   ├── evals/                   # AI Quality Evaluation
+│   ├── mcp/                     # Model Context Protocol
+│   ├── sentiment/               # Sentiment Analysis
+│   ├── sql_agent/               # Natural Language to SQL
+│   ├── validator/               # Document Validation
+│   ├── meeting_notes/           # Meeting Summarization
+│   ├── customer_kyc/            # KYC Verification
+│   ├── ebc_tickets/             # Ticket Management
+│   └── voice/                   # Voice Processing
 │
-├── 📂 use_cases/                 # Example use cases
-│   ├── customer_kyc/             # KYC verification
-│   └── document_qa/              # Document Q&A
+├── ui/console/                  # React Frontend (Port 3000)
+│   ├── src/
+│   │   ├── pages/               # Page components
+│   │   │   ├── DashboardPage.tsx
+│   │   │   ├── AgentsPage.tsx
+│   │   │   ├── RAGPage.tsx
+│   │   │   ├── MultiAgentPage.tsx
+│   │   │   ├── KYCPage.tsx
+│   │   │   └── [more pages...]
+│   │   └── components/          # Shared UI components
+│   ├── package.json
+│   └── vite.config.ts
 │
-├── 📂 docs/                      # Documentation
-│   ├── ARCHITECTURE.md
-│   ├── CORE_MODULES.md
-│   ├── QUICK_REFERENCE.md
-│   └── ...
+├── use_cases/                   # Example Implementations
+│   ├── document_qa/             # Document Q&A pattern
+│   ├── customer_kyc/            # KYC verification
+│   └── meeting_notes/           # Meeting notes processing
 │
-└── 📂 tests/                     # Test suite
-    ├── test_agents.py
-    ├── test_rag.py
-    └── ...
+├── workflows/                   # YAML Workflow Definitions
+│   ├── rag_pipeline.yaml
+│   └── document_analysis.yaml
+│
+├── docs/                        # Comprehensive Documentation (9 files)
+│   ├── ARCHITECTURE.md          # System architecture diagrams
+│   ├── CORE_MODULES.md          # Module specifications
+│   ├── QUICK_REFERENCE.md       # Developer cheat sheet
+│   ├── SECURITY_GOVERNANCE.md   # Security controls
+│   ├── DEVELOPMENT_CYCLE.md     # Development workflow
+│   ├── USE_CASE_BLUEPRINT.md    # Building use cases
+│   ├── OPERATIONAL_PLAYBOOKS.md # Operations guides
+│   └── OBSERVABILITY_MONITORING.md # Monitoring setup
+│
+├── tests/                       # Test Suite
+│   ├── test_agents.py
+│   ├── test_rag.py
+│   └── [more tests...]
+│
+└── scripts/                     # Utility Scripts
+    ├── seed_data.py
+    └── create_tables.py
+```
+
+**Code Statistics:**
+- **113 Python files**
+- **~10,641 lines** of API code
+- **32 API modules**
+- **11 pre-built agent templates**
+
+---
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```bash
+# Environment
+ENV=dev
+LOG_LEVEL=INFO
+
+# LLM Providers (at least one required)
+OPENAI_API_KEY=sk-your-openai-key              # Required for cloud LLMs
+ANTHROPIC_API_KEY=sk-ant-your-key              # Optional
+COHERE_API_KEY=your-cohere-key                 # Optional
+
+# Local Models (Optional)
+OLLAMA_HOST=http://localhost:11434             # For local Llama/Mistral
+
+# Database
+DATABASE_URL=sqlite:///./data/goai.db          # Development (default)
+# DATABASE_URL=postgresql://user:pass@localhost:5432/goai  # Production
+
+# Cache
+REDIS_URL=redis://localhost:6379               # Optional (uses in-memory if not set)
+
+# Vector Store
+VECTOR_DIMENSION=1536                          # OpenAI embedding dimension
+VECTOR_BACKEND=faiss
+
+# Security
+SECRET_KEY=your-secret-key-here                # For JWT tokens (generate strong key)
+JWT_EXPIRATION=3600                            # Token expiration in seconds
+
+# Observability
+ENABLE_TELEMETRY=true
+PROMETHEUS_PORT=9090
+```
+
+### Using Local Models with Ollama
+
+Run AI models locally without cloud API costs:
+
+```bash
+# 1. Install Ollama (Windows)
+# Download from: https://ollama.com/download
+
+# 2. Pull a model
+ollama pull llama3.2         # 3B parameter model
+ollama pull mistral          # 7B parameter model
+ollama pull codellama        # Code-specialized model
+
+# 3. Start Ollama
+ollama serve
+
+# 4. Update .env
+OLLAMA_HOST=http://localhost:11434
+
+# 5. Restart GoAI Platform
+uvicorn main:app --reload
+```
+
+**Available Local Models:**
+- `llama3.2` - General purpose (3B params)
+- `mistral` - Fast and capable (7B params)
+- `codellama` - Code generation (7B/13B/34B params)
+- `llama2` - Predecessor to Llama 3 (7B/13B/70B params)
+
+---
+
+## 🚢 Deployment
+
+### Development (Local)
+
+```bash
+# Backend
+uvicorn main:app --reload --port 8000
+
+# Frontend (separate terminal)
+cd ui/console
+npm run dev
+```
+
+### Production with Docker Compose
+
+```bash
+# Start all services
+docker-compose up -d
+
+# Services started:
+# - postgres:5432 (PostgreSQL)
+# - redis:6379 (Redis)
+# - goai_platform:8000 (Backend API)
+# - goai_console:3000 (Frontend UI)
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+### Production with GPU Support (vLLM)
+
+For high-performance local model inference:
+
+```bash
+# Start vLLM with GPU
+docker-compose -f docker-compose.vllm.yml up -d
+
+# Verify GPU access
+docker exec -it vllm nvidia-smi
+```
+
+### Cloud Deployment Options
+
+**AWS:**
+- **EC2** - t3.large or larger (8GB+ RAM)
+- **RDS** - PostgreSQL 14+
+- **ElastiCache** - Redis 7
+- **S3** - Document storage
+- **CloudWatch** - Monitoring
+
+**GCP:**
+- **Compute Engine** - n1-standard-2 or larger
+- **Cloud SQL** - PostgreSQL
+- **Memorystore** - Redis
+- **Cloud Storage** - Documents
+
+**Azure:**
+- **Virtual Machines** - Standard_D2s_v3 or larger
+- **Azure Database for PostgreSQL**
+- **Azure Cache for Redis**
+- **Blob Storage**
+
+---
+
+## 🔒 Security
+
+### Built-in Security Features
+
+- ✅ **JWT-based authentication** with refresh tokens
+- ✅ **Role-based access control (RBAC)** - Admin, User, Viewer
+- ✅ **Document-level ACL** - Control who can access which documents
+- ✅ **Audit logging** - Every API call logged with user, timestamp, action
+- ✅ **Rate limiting** - Per user/role (configurable)
+- ✅ **Input validation** - Pydantic models for all requests
+- ✅ **Webhook signature verification** - HMAC-SHA256
+- ✅ **PII detection and redaction** - SSN, credit cards, emails
+- ✅ **Prompt injection detection** - Blocks manipulation attempts
+- ✅ **Content filtering** - Harmful content blocking
+
+### Security Checklist
+
+Before deploying to production:
+
+- [ ] Change default `SECRET_KEY` in `.env` (use 256-bit random key)
+- [ ] Set up HTTPS/TLS (use Let's Encrypt or cloud provider certificates)
+- [ ] Configure firewall rules (only allow ports 80, 443, 22)
+- [ ] Enable audit logging (`ENABLE_AUDIT_LOG=true`)
+- [ ] Set appropriate rate limits per role
+- [ ] Configure document ACLs for sensitive data
+- [ ] Set up database backups (daily recommended)
+- [ ] Enable Redis password authentication
+- [ ] Configure CORS allowed origins (remove wildcards)
+- [ ] Test disaster recovery procedures
+- [ ] Review and customize guardrail rules
+- [ ] Set up monitoring and alerting
+
+### Generating Secure Keys
+
+```bash
+# Generate SECRET_KEY
+python -c "import secrets; print(secrets.token_urlsafe(32))"
+
+# Generate webhook secret
+python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
 ---
@@ -983,57 +1032,14 @@ goai-platform-v1/
 
 | Document | Description | Audience |
 |----------|-------------|----------|
-| [QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md) | Developer cheat sheet | Developers |
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System architecture | Architects |
-| [CORE_MODULES.md](docs/CORE_MODULES.md) | Module specifications | Developers |
-| [SECURITY_GOVERNANCE.md](docs/SECURITY_GOVERNANCE.md) | Security controls | Security team |
-| [DEVELOPMENT_CYCLE.md](docs/DEVELOPMENT_CYCLE.md) | Development process | Developers |
-| [USE_CASE_BLUEPRINT.md](docs/USE_CASE_BLUEPRINT.md) | Building use cases | Product/Dev |
-| [OPERATIONAL_PLAYBOOKS.md](docs/OPERATIONAL_PLAYBOOKS.md) | Operations guides | SRE/Ops |
-| [OBSERVABILITY_MONITORING.md](docs/OBSERVABILITY_MONITORING.md) | Monitoring setup | SRE/Ops |
-
----
-
-## 🔧 Configuration
-
-### Environment Variables
-
-```bash
-# Required for LLM features
-OPENAI_API_KEY=sk-your-openai-key
-
-# Optional: Alternative LLM providers
-ANTHROPIC_API_KEY=sk-ant-your-key
-OLLAMA_HOST=http://localhost:11434
-
-# Authentication
-JWT_SECRET=your-256-bit-secret-key
-
-# Database (defaults to SQLite in ./data/)
-DATABASE_URL=sqlite:///./data/goai_platform.db
-
-# Production: PostgreSQL
-# DATABASE_URL=postgresql://user:pass@host:5432/goai
-```
-
-### Using Local Models with Ollama
-
-```bash
-# 1. Install Ollama
-curl -fsSL https://ollama.com/install.sh | sh
-
-# 2. Pull a model
-ollama pull llama3.2
-
-# 3. Start Ollama
-ollama serve
-
-# 4. Set environment variable
-export OLLAMA_HOST=http://localhost:11434
-
-# 5. Restart GoAI server
-uvicorn main:app --reload --port 8000
-```
+| [QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md) | API cheat sheet, common patterns | Developers |
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, data flow diagrams | Architects |
+| [CORE_MODULES.md](docs/CORE_MODULES.md) | Detailed module specifications | Developers |
+| [SECURITY_GOVERNANCE.md](docs/SECURITY_GOVERNANCE.md) | Security controls, compliance | Security Team |
+| [DEVELOPMENT_CYCLE.md](docs/DEVELOPMENT_CYCLE.md) | Dev workflow, contribution guide | Contributors |
+| [USE_CASE_BLUEPRINT.md](docs/USE_CASE_BLUEPRINT.md) | Building custom use cases | Product/Dev |
+| [OPERATIONAL_PLAYBOOKS.md](docs/OPERATIONAL_PLAYBOOKS.md) | Deployment, troubleshooting | SRE/Ops |
+| [OBSERVABILITY_MONITORING.md](docs/OBSERVABILITY_MONITORING.md) | Monitoring, alerting setup | SRE/Ops |
 
 ---
 
@@ -1042,82 +1048,133 @@ uvicorn main:app --reload --port 8000
 ### Run Tests
 
 ```bash
-# All tests
+# Install test dependencies
+pip install pytest pytest-asyncio httpx
+
+# Run all tests
 pytest tests/ -v
 
-# Specific module
+# Run specific module
 pytest tests/test_agents.py -v
 
-# With coverage
+# Run with coverage
 pytest tests/ --cov=modules --cov-report=html
+
+# View coverage report
+open htmlcov/index.html
 ```
 
 ### Test a Use Case
 
 ```bash
-# Run the document Q&A use case test
+# Document Q&A use case
 python use_cases/document_qa/test_use_case.py
+
+# Meeting notes use case
+python use_cases/meeting_notes/test_use_case.py
+
+# Customer KYC use case
+python use_cases/customer_kyc/test_use_case.py
 ```
 
 ---
 
-## 🚢 Deployment
+## 🎓 Learning Path
 
-### Docker
+### For Beginners
 
-```bash
-# Build
-docker build -t goai-platform:latest -f docker/Dockerfile .
+1. **Start with API Docs** - http://localhost:8000/api/docs
+2. **Test Simple Tools** - calculator, date/time (no API key needed)
+3. **Try RAG** - Upload a document, ask questions about it
+4. **Run Agent Template** - Use pre-built "writer" or "summarizer"
+5. **Explore UI** - http://localhost:3000
 
-# Run
-docker run -p 8000:8000 \
-  -e OPENAI_API_KEY=sk-... \
-  -e JWT_SECRET=your-secret \
-  goai-platform:latest
-```
+### For Developers
 
-### Docker Compose
+1. **Read Architecture** - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
+2. **Study Agent Engine** - [`modules/agents/engine.py`](modules/agents/engine.py)
+3. **Create Custom Tool** - Add to [`modules/agents/tools.py`](modules/agents/tools.py)
+4. **Build Agent Template** - Add to [`modules/agents/templates.py`](modules/agents/templates.py)
+5. **Create Use Case** - Follow [`docs/USE_CASE_BLUEPRINT.md`](docs/USE_CASE_BLUEPRINT.md)
 
-```bash
-docker-compose up -d
-```
+### For DevOps
 
-### Production with GPU
-
-```bash
-# Start vLLM with GPU
-docker-compose -f docker-compose.vllm.yml up -d
-
-# Start platform
-docker-compose up -d
-
-# Verify
-curl http://localhost:8000/health
-```
+1. **Set up PostgreSQL + Redis** - Production database
+2. **Configure Ollama** - Local model inference
+3. **Deploy with Docker** - `docker-compose up -d`
+4. **Set up Monitoring** - Prometheus + Grafana
+5. **Configure Backups** - Database + vector store
 
 ---
 
-## 🔒 Security
+## 🤝 Contributing
 
-### Key Security Features
+We welcome contributions! Please follow these guidelines:
 
-- ✅ JWT-based authentication
-- ✅ Role-based access control (RBAC)
-- ✅ Document-level ACL
-- ✅ Audit logging for all operations
-- ✅ Rate limiting per user/role
-- ✅ Input validation & sanitization
-- ✅ Webhook signature verification (HMAC-SHA256)
+### Getting Started
 
-### Security Checklist
+1. **Fork the repository**
+2. **Create a feature branch** - `git checkout -b feature/amazing-feature`
+3. **Make your changes**
+4. **Add tests** - Maintain test coverage
+5. **Run tests** - `pytest tests/ -v`
+6. **Commit** - `git commit -m 'Add amazing feature'`
+7. **Push** - `git push origin feature/amazing-feature`
+8. **Open Pull Request**
 
-- [ ] Change default credentials
-- [ ] Set strong `JWT_SECRET`
-- [ ] Configure HTTPS in production
-- [ ] Enable audit logging
-- [ ] Set appropriate rate limits
-- [ ] Configure document ACLs
-- [ ] Test DR procedures
+### Code Style
+
+- **Python** - Follow PEP 8, use Black formatter
+- **TypeScript/React** - Follow ESLint rules
+- **Docstrings** - Required for all public functions
+- **Type hints** - Required for all Python functions
+- **Tests** - Required for all new features
+
+### Areas for Contribution
+
+- 🧰 **New Agent Tools** - Add tools to `modules/agents/tools.py`
+- 🎭 **Agent Templates** - Create templates in `modules/agents/templates.py`
+- 📚 **RAG Modes** - Implement new retrieval strategies
+- 🔌 **Integrations** - MCP servers, external APIs
+- 📖 **Documentation** - Improve guides and examples
+- 🧪 **Tests** - Increase test coverage
+- 🐛 **Bug Fixes** - Fix issues from GitHub Issues
+
+---
+
+## 📞 Support
+
+### Getting Help
+
+- **📖 Documentation** - Check [`docs/`](docs/) folder
+- **💬 Discussions** - GitHub Discussions for questions
+- **🐛 Bug Reports** - GitHub Issues
+- **🔒 Security Issues** - Email security@yourcompany.com (DO NOT open public issues)
+
+### Troubleshooting
+
+**Server won't start:**
+```bash
+# Check Python version
+python --version  # Should be 3.10+
+
+# Check dependencies
+pip install -r requirements.txt
+
+# Check port availability
+netstat -ano | findstr :8000  # Windows
+lsof -i :8000  # Linux/Mac
+```
+
+**UI won't connect to backend:**
+- Check CORS settings in [`main.py`](main.py#L55-L61)
+- Verify backend is running: `curl http://localhost:8000/health`
+- Check browser console for errors
+
+**Out of memory errors:**
+- Reduce batch size in RAG queries
+- Reduce `VECTOR_DIMENSION` in `.env`
+- Use PostgreSQL instead of SQLite for large datasets
 
 ---
 
@@ -1125,26 +1182,32 @@ curl http://localhost:8000/health
 
 | Version | Date | Highlights |
 |---------|------|------------|
-| **1.5.0** | Dec 2025 | **AI Guardrails** (input/output/tool/PII safety) |
-| **1.4.0** | Dec 2025 | Agent Templates (11 pre-built), HITL Approvals, Observability Dashboard, Meeting Notes |
-| **1.3.0** | Dec 2025 | Bug fixes, singleton patterns, improved webhook security |
-| **1.2.0** | Dec 2025 | AI Evaluations, MCP Protocol, Triggers/Webhooks |
-| **1.1.0** | Dec 2025 | Enhanced agent tools, memory system, prompt library |
-| **1.0.0** | Nov 2025 | Initial sovereign release |
+| **1.5.0** | Dec 2024 | AI Guardrails (input/output/tool/PII safety) |
+| **1.4.0** | Dec 2024 | Agent Templates (11), HITL Approvals, Observability Dashboard |
+| **1.3.0** | Dec 2024 | Bug fixes, singleton patterns, webhook security |
+| **1.2.0** | Dec 2024 | AI Evaluations, MCP Protocol, Triggers/Webhooks |
+| **1.1.0** | Dec 2024 | Enhanced tools, memory system, prompt library |
+| **1.0.0** | Nov 2024 | Initial sovereign release |
 
 ---
 
-## 🤝 Contributing
+## 📜 License
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+**Enterprise License** - See [LICENSE](LICENSE) file for details.
+
+For commercial licensing inquiries, contact: licensing@yourcompany.com
 
 ---
 
-## 📞 Support
+## 🙏 Acknowledgments
 
-- **Documentation**: [docs/](docs/)
-- **Issues**: [GitHub Issues](https://github.com/your-org/goai-platform-v1/issues)
-- **Security**: security@yourcompany.com
+Built with:
+- [FastAPI](https://fastapi.tiangolo.com) - Modern web framework
+- [React](https://react.dev) - UI library
+- [FAISS](https://github.com/facebookresearch/faiss) - Vector similarity search
+- [OpenAI](https://openai.com) - GPT models
+- [Anthropic](https://anthropic.com) - Claude models
+- [Ollama](https://ollama.com) - Local model runtime
 
 ---
 
@@ -1154,7 +1217,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 **Enterprise AI Under Your Complete Control**
 
-*Built with ❤️ for organizations that value data sovereignty*
+*Built for organizations that value data sovereignty*
+
+[⭐ Star on GitHub](https://github.com/your-org/goai-platform-v1) • [📖 Read Docs](docs/) • [🐛 Report Bug](https://github.com/your-org/goai-platform-v1/issues) • [✨ Request Feature](https://github.com/your-org/goai-platform-v1/issues)
 
 </div>
-]]>
