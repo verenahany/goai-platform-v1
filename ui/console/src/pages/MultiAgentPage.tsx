@@ -89,15 +89,31 @@ export default function MultiAgentPage() {
   const [running, setRunning] = useState(false);
   const [events, setEvents] = useState<AgentEvent[]>([]);
   const [finalResult, setFinalResult] = useState<string | null>(null);
+
   const eventsEndRef = useRef<HTMLDivElement>(null);
+  const eventsContainerRef = useRef<HTMLDivElement>(null);
+  const shouldAutoScrollRef = useRef(true);
 
   useEffect(() => {
     fetchConfig();
   }, []);
 
+  const handleEventsScroll = () => {
+    const el = eventsContainerRef.current;
+    if (!el) return;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    shouldAutoScrollRef.current = distanceFromBottom < 80;
+  };
+
   useEffect(() => {
-    eventsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (!shouldAutoScrollRef.current) return;
+    const el = eventsContainerRef.current;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
   }, [events]);
+
 
   const fetchConfig = async () => {
     try {
@@ -120,11 +136,14 @@ export default function MultiAgentPage() {
 
   const runMultiAgent = async () => {
     if (!task.trim()) return;
-    
+
+    // Starting a run should stick to bottom as events stream in.
+    shouldAutoScrollRef.current = true;
+
     setRunning(true);
     setEvents([]);
     setFinalResult(null);
-    
+
     try {
       const response = await fetch(`${API_BASE}/multi-agent/run`, {
         method: 'POST',
@@ -611,7 +630,7 @@ export default function MultiAgentPage() {
               <h3 style={{ margin: 0 }}>Agent Collaboration</h3>
             </div>
             
-            <div style={{ flex: 1, overflow: 'auto', padding: 20 }}>
+            <div ref={eventsContainerRef} onScroll={handleEventsScroll} style={{ flex: 1, overflow: 'auto', padding: 20 }}>
               {events.length === 0 ? (
                 <div style={{ 
                   display: 'flex', 

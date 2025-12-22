@@ -46,7 +46,18 @@ export default function ChatPage() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const shouldAutoScrollRef = useRef(true);
+
+  const handleMessagesScroll = () => {
+    const el = messagesContainerRef.current;
+    if (!el) return;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    // If the user scrolls up, stop forcing scroll-to-bottom on every new token/message.
+    shouldAutoScrollRef.current = distanceFromBottom < 80;
+  };
   
   // Model selection
   const [models, setModels] = useState<ModelOption[]>([]);
@@ -141,7 +152,14 @@ export default function ChatPage() {
   };
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (!shouldAutoScrollRef.current) return;
+    const el = messagesContainerRef.current;
+    if (!el) return;
+
+    // Avoid scrollIntoView because it can scroll ancestor containers on tab switch.
+    requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
   }, [messages]);
 
   const createNewConversation = async () => {
@@ -156,6 +174,9 @@ export default function ChatPage() {
 
   const sendMessage = async () => {
     if (!input.trim() || loading) return;
+
+    // Sending a message should pin to the latest response.
+    shouldAutoScrollRef.current = true;
 
     const userMessage: Message = {
       role: 'user',
@@ -759,7 +780,7 @@ export default function ChatPage() {
       </header>
 
       <div className="chat-container">
-        <div className="chat-messages">
+        <div className="chat-messages" ref={messagesContainerRef} onScroll={handleMessagesScroll}>
           {messages.length === 0 && (
             <div style={{
               display: 'flex',

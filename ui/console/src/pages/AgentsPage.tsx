@@ -83,17 +83,31 @@ export default function AgentsPage() {
   const [selectedModel, setSelectedModel] = useState('gpt-4o-mini');
   const [tools, setTools] = useState<any[]>([]);
   const [showTools, setShowTools] = useState(false);
+
   const stepsEndRef = useRef<HTMLDivElement>(null);
+  const stepsContainerRef = useRef<HTMLDivElement>(null);
+  const shouldAutoScrollRef = useRef(true);
 
   useEffect(() => {
     fetchTools();
   }, []);
 
+  const handleStepsScroll = () => {
+    const el = stepsContainerRef.current;
+    if (!el) return;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    shouldAutoScrollRef.current = distanceFromBottom < 80;
+  };
+
   useEffect(() => {
-    stepsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (!shouldAutoScrollRef.current) return;
+    const el = stepsContainerRef.current;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
   }, [steps]);
 
-  const fetchTools = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/v1/agents/tools');
       setTools(response.data.tools || []);
@@ -104,6 +118,9 @@ export default function AgentsPage() {
 
   const runAgent = async () => {
     if (!task.trim() || loading) return;
+
+    // A new run should stick to the bottom as new steps stream in.
+    shouldAutoScrollRef.current = true;
 
     setLoading(true);
     setSteps([]);
@@ -497,11 +514,15 @@ export default function AgentsPage() {
               )}
             </div>
 
-            <div style={{ 
-              flex: 1, 
-              overflow: 'auto', 
-              padding: '0 4px'
-            }}>
+            <div
+              ref={stepsContainerRef}
+              onScroll={handleStepsScroll}
+              style={{
+                flex: 1,
+                overflow: 'auto',
+                padding: '0 4px'
+              }}
+            >
               {steps.length === 0 && !loading ? (
                 <div style={{ 
                   display: 'flex', 
