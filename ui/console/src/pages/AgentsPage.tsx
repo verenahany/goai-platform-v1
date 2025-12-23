@@ -108,6 +108,7 @@ export default function AgentsPage() {
     });
   }, [steps]);
 
+  const fetchTools = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/v1/agents/tools');
       setTools(response.data.tools || []);
