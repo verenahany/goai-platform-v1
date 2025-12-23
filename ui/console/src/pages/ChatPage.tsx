@@ -1035,11 +1035,11 @@ export default function ChatPage() {
               onClick={sendMessage}
               disabled={loading || !input.trim()}
             >
-              <Send size={20} />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="19" x2="12" y2="5"></line>
+                <polyline points="5 12 12 5 19 12"></polyline>
+              </svg>
             </button>
-          </div>
-          <div style={{ marginTop: 8, fontSize: 12, color: 'var(--text-muted)', textAlign: 'center' }}>
-            Press Enter to send • Shift+Enter for new line
           </div>
         </div>
       </div>
