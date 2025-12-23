@@ -20,7 +20,9 @@ import {
   LogOut,
   User,
   Ticket,
-  UserCheck
+  UserCheck,
+  PanelLeftClose,
+  PanelLeftOpen
 } from 'lucide-react';
 import ChatPage from './pages/ChatPage';
 import DocumentsPage from './pages/DocumentsPage';
@@ -57,6 +59,7 @@ interface NavItem {
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<Page>('dashboard');
   const [isConnected, setIsConnected] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAuth();
 
@@ -141,164 +144,114 @@ function AppContent() {
     <ToastProvider>
     <div className="app-layout">
       {/* Sidebar */}
-      <aside className="sidebar">
+      <aside className={`sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="sidebar-header">
-          <div className="logo">
+          {!sidebarCollapsed && (
             <div className="logo-icon">
-              <Brain size={24} />
+              <img
+                src={theme === 'dark' ? '/white.png' : '/black.png'}
+                alt="GoAI"
+              />
             </div>
-            <div>
-              <div className="logo-text">GoAI</div>
-              <div className="logo-version">Sovereign Platform v1</div>
-            </div>
-          </div>
+          )}
+          <button
+            className="sidebar-toggle"
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {sidebarCollapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+          </button>
         </div>
 
         <nav className="nav-section">
-          <div className="nav-section-title">Main</div>
+          {!sidebarCollapsed && <div className="nav-section-title">Main</div>}
           {navItems.map((item) => (
             <div
               key={item.id}
               className={`nav-item ${currentPage === item.id ? 'active' : ''}`}
               onClick={() => setCurrentPage(item.id)}
+              title={sidebarCollapsed ? item.label : ''}
             >
               {item.icon}
-              <span>{item.label}</span>
+              {!sidebarCollapsed && <span>{item.label}</span>}
             </div>
           ))}
         </nav>
 
         <nav className="nav-section">
-          <div className="nav-section-title">System</div>
-          <div 
+          {!sidebarCollapsed && <div className="nav-section-title">System</div>}
+          <div
             className={`nav-item ${currentPage === 'auth' ? 'active' : ''}`}
             onClick={() => setCurrentPage('auth')}
+            title={sidebarCollapsed ? 'Auth' : ''}
           >
             <Shield size={20} />
-            <span>Auth</span>
+            {!sidebarCollapsed && <span>Auth</span>}
           </div>
-          <div 
+          <div
             className={`nav-item ${currentPage === 'settings' ? 'active' : ''}`}
             onClick={() => setCurrentPage('settings')}
+            title={sidebarCollapsed ? 'Settings' : ''}
           >
             <Settings size={20} />
-            <span>Settings</span>
+            {!sidebarCollapsed && <span>Settings</span>}
           </div>
         </nav>
 
         <div className="sidebar-footer">
           {/* User Info */}
           {isAuthenticated && user ? (
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              padding: '10px 12px',
-              marginBottom: 12,
-              background: 'var(--bg-tertiary)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-color)'
-            }}>
-              <div style={{
-                width: 32,
-                height: 32,
-                borderRadius: '50%',
-                background: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                fontWeight: 600,
-                fontSize: 12
-              }}>
+            sidebarCollapsed ? (
+              <div
+                className="user-avatar-compact"
+                onClick={() => setCurrentPage('auth')}
+                title={user.username}
+              >
                 {user.username.slice(0, 2).toUpperCase()}
               </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {user.username}
+            ) : (
+              <div className="user-info-card">
+                <div className="user-avatar">
+                  {user.username.slice(0, 2).toUpperCase()}
                 </div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {user.email}
+                <div className="user-details">
+                  <div className="user-name">{user.username}</div>
+                  <div className="user-email">{user.email}</div>
                 </div>
+                <button
+                  onClick={logout}
+                  title="Logout"
+                  className="logout-btn"
+                >
+                  <LogOut size={16} />
+                </button>
               </div>
-              <button
-                onClick={logout}
-                title="Logout"
-                style={{
-                  padding: 6,
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: 'var(--text-muted)',
-                  borderRadius: 'var(--radius-sm)'
-                }}
-              >
-                <LogOut size={16} />
-              </button>
-            </div>
+            )
           ) : (
             <button
               onClick={() => setCurrentPage('auth')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 8,
-                width: '100%',
-                padding: '10px 16px',
-                marginBottom: 12,
-                background: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
-                border: 'none',
-                borderRadius: 'var(--radius-md)',
-                color: 'white',
-                cursor: 'pointer',
-                fontSize: 13,
-                fontWeight: 600
-              }}
+              className="signin-btn"
+              title={sidebarCollapsed ? 'Sign In' : ''}
             >
               <User size={16} />
-              Sign In
+              {!sidebarCollapsed && <span>Sign In</span>}
             </button>
           )}
-          
+
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 8,
-              width: '100%',
-              padding: '10px 16px',
-              marginBottom: 12,
-              background: 'var(--bg-tertiary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: 'var(--radius-md)',
-              color: 'var(--text-secondary)',
-              cursor: 'pointer',
-              fontSize: 13,
-              transition: 'all 0.2s ease'
-            }}
-            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            className="theme-toggle-btn"
+            title={sidebarCollapsed ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
-            {theme === 'dark' ? (
-              <>
-                <Sun size={16} />
-                <span>Light Mode</span>
-              </>
-            ) : (
-              <>
-                <Moon size={16} />
-                <span>Dark Mode</span>
-              </>
-            )}
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            {!sidebarCollapsed && <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>}
           </button>
-          
+
           <div className="status-indicator">
-            <div className={`status-dot ${isConnected ? '' : 'error'}`} 
+            <div className={`status-dot ${isConnected ? '' : 'error'}`}
                  style={{ background: isConnected ? '#10b981' : '#ef4444' }} />
-            <span>{isConnected ? 'API Connected' : 'Disconnected'}</span>
+            {!sidebarCollapsed && <span>{isConnected ? 'API Connected' : 'Disconnected'}</span>}
           </div>
         </div>
       </aside>

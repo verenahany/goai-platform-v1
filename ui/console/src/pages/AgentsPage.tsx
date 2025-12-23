@@ -336,17 +336,17 @@ export default function AgentsPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <h1 className="page-title">
-              <Bot size={28} style={{ marginRight: 12, color: 'var(--accent-primary)' }} />
+              <Bot size={20} style={{ color: 'var(--accent-primary)' }} />
               AI Agents
             </h1>
             <p className="page-subtitle">Autonomous AI that uses tools to complete tasks</p>
           </div>
-          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             {/* Streaming Toggle */}
             <button
               className={`btn ${useStreaming ? 'btn-primary' : 'btn-secondary'}`}
               onClick={() => setUseStreaming(!useStreaming)}
-              style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 12px', fontSize: '12px' }}
             >
               <Zap size={14} />
               {useStreaming ? 'Stream' : 'Batch'}
@@ -356,14 +356,7 @@ export default function AgentsPage() {
             <select
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value)}
-              style={{
-                background: 'var(--bg-tertiary)',
-                border: '1px solid var(--border-color)',
-                borderRadius: 'var(--radius-md)',
-                padding: '8px 12px',
-                color: 'var(--text-primary)',
-                cursor: 'pointer'
-              }}
+              className="compact-select"
             >
               <option value="gpt-4o-mini">gpt-4o-mini</option>
               <option value="gpt-4o">gpt-4o</option>
@@ -374,8 +367,9 @@ export default function AgentsPage() {
             <button
               className="btn btn-secondary"
               onClick={() => setShowTools(!showTools)}
+              style={{ padding: '7px 12px', fontSize: '12px' }}
             >
-              <Wrench size={16} />
+              <Wrench size={14} />
               Tools ({tools.length})
             </button>
           </div>

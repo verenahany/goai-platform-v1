@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  UserCheck, FileText, AlertTriangle, CheckCircle, 
-  XCircle, Clock, Shield, Search, Plus, Eye,
-  ChevronDown, ChevronUp, RefreshCw, Upload, Camera, Scan
+import { useState, useEffect, useRef } from 'react';
+import {
+  UserCheck, FileText, AlertTriangle, CheckCircle,
+  XCircle, Clock, Shield, Plus, Eye, RefreshCw, Scan
 } from 'lucide-react';
 import { useToast } from '../components/Toast';
 
@@ -55,21 +54,6 @@ const DOCUMENT_TYPES = [
   { value: 'bank_statement', label: 'Bank Statement', icon: '🏦' },
 ];
 
-const RISK_COLORS = {
-  low: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-  medium: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-  high: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-  critical: 'bg-red-500/20 text-red-400 border-red-500/30',
-};
-
-const STATUS_COLORS = {
-  pending: 'bg-gray-500/20 text-gray-400',
-  approved: 'bg-emerald-500/20 text-emerald-400',
-  rejected: 'bg-red-500/20 text-red-400',
-  manual_review: 'bg-amber-500/20 text-amber-400',
-  escalated: 'bg-orange-500/20 text-orange-400',
-};
-
 export default function KYCPage() {
   const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState<'verify' | 'cases' | 'stats'>('verify');
@@ -78,8 +62,7 @@ export default function KYCPage() {
   const [stats, setStats] = useState<any>(null);
   const [selectedCase, setSelectedCase] = useState<KYCCase | null>(null);
   const [result, setResult] = useState<any>(null);
-  
-  // Form state
+
   const [customer, setCustomer] = useState<CustomerInput>({
     first_name: '',
     last_name: '',
@@ -91,7 +74,7 @@ export default function KYCPage() {
     occupation: '',
     source_of_funds: '',
   });
-  
+
   const [documents, setDocuments] = useState<DocumentInput[]>([{
     document_type: 'passport',
     document_number: '',
@@ -100,15 +83,13 @@ export default function KYCPage() {
     expiry_date: '',
     content: '',
   }]);
-  
-  // OCR state
-  const [ocrLoading, setOcrLoading] = useState<number | null>(null); // index of document being OCR'd
+
+  const [ocrLoading, setOcrLoading] = useState<number | null>(null);
   const [ocrProviders, setOcrProviders] = useState<string[]>([]);
   const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
-    // Load available OCR providers
-    fetch('/api/v1/ocr/providers')
+    fetch('http://localhost:8000/api/v1/ocr/providers')
       .then(res => res.json())
       .then(data => setOcrProviders(data.available_providers || []))
       .catch(() => {});
@@ -121,7 +102,7 @@ export default function KYCPage() {
 
   const loadCases = async () => {
     try {
-      const res = await fetch('/api/v1/kyc/cases');
+      const res = await fetch('http://localhost:8000/api/v1/kyc/cases');
       const data = await res.json();
       setCases(data.cases || []);
     } catch (error) {
@@ -131,7 +112,7 @@ export default function KYCPage() {
 
   const loadStats = async () => {
     try {
-      const res = await fetch('/api/v1/kyc/stats');
+      const res = await fetch('http://localhost:8000/api/v1/kyc/stats');
       const data = await res.json();
       setStats(data);
     } catch (error) {
@@ -144,7 +125,7 @@ export default function KYCPage() {
       showToast('Please enter customer name', 'error');
       return;
     }
-    
+
     if (!documents[0].content) {
       showToast('Please provide document content', 'error');
       return;
@@ -152,9 +133,9 @@ export default function KYCPage() {
 
     setLoading(true);
     setResult(null);
-    
+
     try {
-      const res = await fetch('/api/v1/kyc/verify', {
+      const res = await fetch('http://localhost:8000/api/v1/kyc/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -164,13 +145,13 @@ export default function KYCPage() {
           model: 'gpt-4o-mini'
         })
       });
-      
+
       if (!res.ok) throw new Error('Verification failed');
-      
+
       const data = await res.json();
       setResult(data);
       showToast('KYC verification completed', 'success');
-      
+
     } catch (error) {
       showToast('Verification failed', 'error');
     } finally {
@@ -201,48 +182,41 @@ export default function KYCPage() {
     setDocuments(updated);
   };
 
-  // OCR: Handle image upload and extract text
   const handleImageUpload = async (index: number, file: File) => {
     if (!file) return;
-    
-    // Check file type
+
     const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/tiff'];
     if (!validTypes.includes(file.type)) {
-      showToast('Please upload an image file (JPEG, PNG, GIF, WebP, BMP, or TIFF)', 'error');
+      showToast('Please upload an image file', 'error');
       return;
     }
-    
-    // Check file size (max 20MB)
+
     if (file.size > 20 * 1024 * 1024) {
       showToast('File too large. Max 20MB.', 'error');
       return;
     }
-    
+
     setOcrLoading(index);
-    
+
     try {
-      // Create FormData
       const formData = new FormData();
       formData.append('file', file);
       formData.append('document_type', documents[index].document_type);
       formData.append('extract_structured', 'true');
-      
-      const res = await fetch('/api/v1/ocr/extract/upload', {
+
+      const res = await fetch('http://localhost:8000/api/v1/ocr/extract/upload', {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!res.ok) {
         const error = await res.json();
         throw new Error(error.detail || 'OCR extraction failed');
       }
-      
+
       const data = await res.json();
-      
-      // Update document content with extracted text
       updateDocument(index, 'content', data.text);
-      
-      // If structured data was extracted, try to fill in fields
+
       if (data.structured_data) {
         const sd = data.structured_data;
         if (sd.passport_number || sd.license_number || sd.id_number) {
@@ -257,27 +231,10 @@ export default function KYCPage() {
         if (sd.date_of_expiry || sd.expiry_date) {
           updateDocument(index, 'expiry_date', sd.date_of_expiry || sd.expiry_date || '');
         }
-        
-        // Also update customer fields if this is an ID document
-        if (sd.given_names || sd.full_name) {
-          const names = (sd.given_names || sd.full_name || '').split(' ');
-          if (names.length > 0 && !customer.first_name) {
-            setCustomer(prev => ({ ...prev, first_name: names[0] }));
-          }
-        }
-        if (sd.surname && !customer.last_name) {
-          setCustomer(prev => ({ ...prev, last_name: sd.surname }));
-        }
-        if (sd.date_of_birth && !customer.date_of_birth) {
-          setCustomer(prev => ({ ...prev, date_of_birth: sd.date_of_birth }));
-        }
-        if (sd.nationality && !customer.nationality) {
-          setCustomer(prev => ({ ...prev, nationality: sd.nationality }));
-        }
       }
-      
-      showToast(`Text extracted successfully (${data.confidence > 0.9 ? 'High' : 'Medium'} confidence, ${data.processing_time_ms}ms)`, 'success');
-      
+
+      showToast(`Text extracted successfully (${data.processing_time_ms}ms)`, 'success');
+
     } catch (error: any) {
       showToast(error.message || 'OCR extraction failed', 'error');
     } finally {
@@ -305,7 +262,7 @@ export default function KYCPage() {
       expiry_date: '2030-01-14',
       content: `PASSPORT
 United States of America
-      
+
 Surname: SMITH
 Given Names: JOHN
 Nationality: AMERICAN
@@ -314,590 +271,693 @@ Sex: M
 Place of Birth: NEW YORK
 Date of Issue: 15 JAN 2020
 Date of Expiry: 14 JAN 2030
-Passport No: US123456789
-
-Machine Readable Zone:
-P<USASMITH<<JOHN<<<<<<<<<<<<<<<<<<<<<<<<<<
-US1234567899USA8506159M3001148<<<<<<<<<<<02`,
+Passport No: US123456789`,
     }]);
     showToast('Sample data loaded', 'success');
   };
 
+  const getRiskColor = (risk: string) => {
+    switch(risk) {
+      case 'low': return { bg: 'rgba(16, 185, 129, 0.1)', border: 'rgba(16, 185, 129, 0.3)', text: 'var(--accent-tertiary)' };
+      case 'medium': return { bg: 'rgba(245, 158, 11, 0.1)', border: 'rgba(245, 158, 11, 0.3)', text: 'var(--accent-warning)' };
+      case 'high': return { bg: 'rgba(251, 146, 60, 0.1)', border: 'rgba(251, 146, 60, 0.3)', text: '#fb923c' };
+      case 'critical': return { bg: 'rgba(239, 68, 68, 0.1)', border: 'rgba(239, 68, 68, 0.3)', text: 'var(--accent-danger)' };
+      default: return { bg: 'var(--bg-tertiary)', border: 'var(--border-color)', text: 'var(--text-secondary)' };
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch(status) {
+      case 'approved': return { bg: 'rgba(16, 185, 129, 0.1)', text: 'var(--accent-tertiary)' };
+      case 'rejected': return { bg: 'rgba(239, 68, 68, 0.1)', text: 'var(--accent-danger)' };
+      case 'manual_review': return { bg: 'rgba(245, 158, 11, 0.1)', text: 'var(--accent-warning)' };
+      case 'escalated': return { bg: 'rgba(251, 146, 60, 0.1)', text: '#fb923c' };
+      default: return { bg: 'var(--bg-tertiary)', text: 'var(--text-muted)' };
+    }
+  };
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 
-                          flex items-center justify-center shadow-lg shadow-violet-500/20">
-            <UserCheck className="w-5 h-5 text-white" />
-          </div>
+    <>
+      <header className="page-header">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <h1 className="text-2xl font-bold text-white">Customer KYC</h1>
-            <p className="text-sm text-gray-400">Know Your Customer - AI-Powered Verification</p>
+            <h1 className="page-title">
+              <UserCheck size={22} style={{ color: 'var(--accent-secondary)' }} />
+              Customer KYC
+            </h1>
+            <p className="page-subtitle">Know Your Customer - AI-Powered Verification</p>
+          </div>
+
+          <div style={{ display: 'flex', gap: 8 }}>
+            {[
+              { id: 'verify', label: 'New Verification', icon: Plus },
+              { id: 'cases', label: 'Cases', icon: FileText },
+              { id: 'stats', label: 'Statistics', icon: Shield },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`btn ${activeTab === tab.id ? 'btn-primary' : 'btn-secondary'}`}
+                style={{ padding: '8px 14px', fontSize: '13px' }}
+              >
+                <tab.icon size={14} />
+                {tab.label}
+              </button>
+            ))}
           </div>
         </div>
-        
-        {/* Tabs */}
-        <div className="flex gap-2">
-          {[
-            { id: 'verify', label: 'New Verification', icon: Plus },
-            { id: 'cases', label: 'Cases', icon: FileText },
-            { id: 'stats', label: 'Statistics', icon: Shield },
-          ].map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all ${
-                activeTab === tab.id
-                  ? 'bg-violet-500/20 text-violet-400 border border-violet-500/30'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <tab.icon className="w-4 h-4" />
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
+      </header>
 
-      {/* Verify Tab */}
-      {activeTab === 'verify' && (
-        <div className="grid grid-cols-2 gap-6">
-          {/* Left: Form */}
-          <div className="space-y-4">
-            {/* Customer Info Card */}
-            <div className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <UserCheck className="w-5 h-5 text-violet-400" />
-                  Customer Information
-                </h3>
-                <button
-                  onClick={loadSampleData}
-                  className="text-xs px-3 py-1.5 rounded-lg bg-violet-500/20 text-violet-400 
-                           hover:bg-violet-500/30 transition-all"
-                >
-                  Load Sample
-                </button>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  placeholder="First Name *"
-                  value={customer.first_name}
-                  onChange={e => setCustomer({...customer, first_name: e.target.value})}
-                  className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                           text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                />
-                <input
-                  type="text"
-                  placeholder="Last Name *"
-                  value={customer.last_name}
-                  onChange={e => setCustomer({...customer, last_name: e.target.value})}
-                  className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                           text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                />
-                <input
-                  type="date"
-                  placeholder="Date of Birth"
-                  value={customer.date_of_birth}
-                  onChange={e => setCustomer({...customer, date_of_birth: e.target.value})}
-                  className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                           text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                />
-                <input
-                  type="text"
-                  placeholder="Nationality"
-                  value={customer.nationality}
-                  onChange={e => setCustomer({...customer, nationality: e.target.value})}
-                  className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                           text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={customer.email}
-                  onChange={e => setCustomer({...customer, email: e.target.value})}
-                  className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                           text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone"
-                  value={customer.phone}
-                  onChange={e => setCustomer({...customer, phone: e.target.value})}
-                  className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                           text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                />
-                <input
-                  type="text"
-                  placeholder="Address"
-                  value={customer.address}
-                  onChange={e => setCustomer({...customer, address: e.target.value})}
-                  className="col-span-2 bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                           text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                />
-                <input
-                  type="text"
-                  placeholder="Occupation"
-                  value={customer.occupation}
-                  onChange={e => setCustomer({...customer, occupation: e.target.value})}
-                  className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                           text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                />
-                <input
-                  type="text"
-                  placeholder="Source of Funds"
-                  value={customer.source_of_funds}
-                  onChange={e => setCustomer({...customer, source_of_funds: e.target.value})}
-                  className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                           text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                />
-              </div>
-            </div>
-
-            {/* Documents */}
-            {documents.map((doc, index) => (
-              <div key={index} className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                    <FileText className="w-5 h-5 text-blue-400" />
-                    Document {index + 1}
-                  </h3>
-                  {documents.length > 1 && (
-                    <button
-                      onClick={() => removeDocument(index)}
-                      className="text-red-400 hover:text-red-300 text-sm"
-                    >
-                      Remove
-                    </button>
-                  )}
+      <div className="page-content">
+        {/* Verify Tab */}
+        {activeTab === 'verify' && (
+          <div className="grid-2" style={{ gap: 24 }}>
+            {/* Left: Form */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+              {/* Customer Info Card */}
+              <div className="card">
+                <div className="card-header">
+                  <h2 className="card-title">
+                    <UserCheck size={18} style={{ marginRight: 8, color: 'var(--accent-secondary)' }} />
+                    Customer Information
+                  </h2>
+                  <button onClick={loadSampleData} className="btn btn-secondary btn-sm">
+                    Load Sample
+                  </button>
                 </div>
-                
-                <div className="space-y-4">
-                  <select
-                    value={doc.document_type}
-                    onChange={e => updateDocument(index, 'document_type', e.target.value)}
-                    className="w-full bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                             text-white focus:border-violet-500/50 focus:outline-none"
-                  >
-                    {DOCUMENT_TYPES.map(type => (
-                      <option key={type.value} value={type.value}>
-                        {type.icon} {type.label}
-                      </option>
-                    ))}
-                  </select>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      placeholder="Document Number"
-                      value={doc.document_number}
-                      onChange={e => updateDocument(index, 'document_number', e.target.value)}
-                      className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                               text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Issuing Country"
-                      value={doc.issuing_country}
-                      onChange={e => updateDocument(index, 'issuing_country', e.target.value)}
-                      className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                               text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                    />
-                    <input
-                      type="date"
-                      placeholder="Issue Date"
-                      value={doc.issue_date}
-                      onChange={e => updateDocument(index, 'issue_date', e.target.value)}
-                      className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                               text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                    />
-                    <input
-                      type="date"
-                      placeholder="Expiry Date"
-                      value={doc.expiry_date}
-                      onChange={e => updateDocument(index, 'expiry_date', e.target.value)}
-                      className="bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 
-                               text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none"
-                    />
-                  </div>
-                  
-                  {/* OCR Upload Section */}
-                  <div className="flex items-center gap-3 p-3 bg-gray-900/30 rounded-lg border border-dashed border-gray-600/50">
-                    <input
-                      type="file"
-                      ref={el => fileInputRefs.current[index] = el}
-                      onChange={e => {
-                        const file = e.target.files?.[0];
-                        if (file) handleImageUpload(index, file);
-                        e.target.value = ''; // Reset input
-                      }}
-                      accept="image/*"
-                      className="hidden"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => fileInputRefs.current[index]?.click()}
-                      disabled={ocrLoading === index}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 text-blue-400 
-                               hover:bg-blue-500/30 border border-blue-500/30 transition-all disabled:opacity-50"
-                    >
-                      {ocrLoading === index ? (
-                        <>
-                          <RefreshCw className="w-4 h-4 animate-spin" />
-                          Extracting...
-                        </>
-                      ) : (
-                        <>
-                          <Scan className="w-4 h-4" />
-                          Upload & OCR
-                        </>
-                      )}
-                    </button>
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-400">
-                        Upload ID photo for automatic text extraction
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Supports: JPEG, PNG, WebP • Max 20MB
-                        {ocrProviders.length > 0 && (
-                          <span className="ml-2 text-emerald-400">
-                            • OCR: {ocrProviders.includes('gpt4_vision') ? 'GPT-4V' : ocrProviders[0]}
-                          </span>
-                        )}
-                      </p>
-                    </div>
-                  </div>
 
-                  <textarea
-                    placeholder="Document content will appear here after OCR, or paste text manually *"
-                    value={doc.content}
-                    onChange={e => updateDocument(index, 'content', e.target.value)}
-                    rows={6}
-                    className="w-full bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-3 
-                             text-white placeholder-gray-500 focus:border-violet-500/50 focus:outline-none 
-                             font-mono text-sm"
+                <div className="grid-2" style={{ gap: 12 }}>
+                  <input
+                    type="text"
+                    placeholder="First Name *"
+                    value={customer.first_name}
+                    onChange={e => setCustomer({...customer, first_name: e.target.value})}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last Name *"
+                    value={customer.last_name}
+                    onChange={e => setCustomer({...customer, last_name: e.target.value})}
+                  />
+                  <input
+                    type="date"
+                    placeholder="Date of Birth"
+                    value={customer.date_of_birth}
+                    onChange={e => setCustomer({...customer, date_of_birth: e.target.value})}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Nationality"
+                    value={customer.nationality}
+                    onChange={e => setCustomer({...customer, nationality: e.target.value})}
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={customer.email}
+                    onChange={e => setCustomer({...customer, email: e.target.value})}
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Phone"
+                    value={customer.phone}
+                    onChange={e => setCustomer({...customer, phone: e.target.value})}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Address"
+                    value={customer.address}
+                    onChange={e => setCustomer({...customer, address: e.target.value})}
+                    style={{ gridColumn: '1 / -1' }}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Occupation"
+                    value={customer.occupation}
+                    onChange={e => setCustomer({...customer, occupation: e.target.value})}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Source of Funds"
+                    value={customer.source_of_funds}
+                    onChange={e => setCustomer({...customer, source_of_funds: e.target.value})}
                   />
                 </div>
               </div>
-            ))}
 
-            {/* Action Buttons */}
-            <div className="flex gap-4">
-              <button
-                onClick={addDocument}
-                className="flex-1 py-3 rounded-xl bg-gray-700/50 text-gray-300 
-                         hover:bg-gray-700 transition-all flex items-center justify-center gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                Add Document
-              </button>
-              <button
-                onClick={handleVerify}
-                disabled={loading}
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 
-                         text-white font-medium hover:from-violet-600 hover:to-purple-700 
-                         disabled:opacity-50 transition-all flex items-center justify-center gap-2"
-              >
-                {loading ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                    Verifying...
-                  </>
-                ) : (
-                  <>
-                    <Shield className="w-4 h-4" />
-                    Run KYC Verification
-                  </>
-                )}
-              </button>
+              {/* Documents */}
+              {documents.map((doc, index) => (
+                <div key={index} className="card">
+                  <div className="card-header">
+                    <h2 className="card-title">
+                      <FileText size={18} style={{ marginRight: 8, color: 'var(--accent-primary)' }} />
+                      Document {index + 1}
+                    </h2>
+                    {documents.length > 1 && (
+                      <button
+                        onClick={() => removeDocument(index)}
+                        className="btn btn-secondary btn-sm"
+                        style={{ color: 'var(--accent-danger)' }}
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <select
+                      value={doc.document_type}
+                      onChange={e => updateDocument(index, 'document_type', e.target.value)}
+                      className="document-type-select"
+                    >
+                      {DOCUMENT_TYPES.map(type => (
+                        <option key={type.value} value={type.value}>
+                          {type.icon} {type.label}
+                        </option>
+                      ))}
+                    </select>
+
+                    <div className="grid-2" style={{ gap: 12 }}>
+                      <input
+                        type="text"
+                        placeholder="Document Number"
+                        value={doc.document_number}
+                        onChange={e => updateDocument(index, 'document_number', e.target.value)}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Issuing Country"
+                        value={doc.issuing_country}
+                        onChange={e => updateDocument(index, 'issuing_country', e.target.value)}
+                      />
+                      <input
+                        type="date"
+                        placeholder="Issue Date"
+                        value={doc.issue_date}
+                        onChange={e => updateDocument(index, 'issue_date', e.target.value)}
+                      />
+                      <input
+                        type="date"
+                        placeholder="Expiry Date"
+                        value={doc.expiry_date}
+                        onChange={e => updateDocument(index, 'expiry_date', e.target.value)}
+                      />
+                    </div>
+
+                    {/* OCR Upload */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 12,
+                      padding: 16,
+                      background: 'var(--bg-primary)',
+                      borderRadius: 'var(--radius-md)',
+                      border: '2px dashed var(--border-color)'
+                    }}>
+                      <input
+                        type="file"
+                        ref={el => fileInputRefs.current[index] = el}
+                        onChange={e => {
+                          const file = e.target.files?.[0];
+                          if (file) handleImageUpload(index, file);
+                          e.target.value = '';
+                        }}
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => fileInputRefs.current[index]?.click()}
+                        disabled={ocrLoading === index}
+                        className="btn btn-primary"
+                        style={{ flexShrink: 0 }}
+                      >
+                        {ocrLoading === index ? (
+                          <>
+                            <RefreshCw size={14} className="spin" />
+                            Extracting...
+                          </>
+                        ) : (
+                          <>
+                            <Scan size={14} />
+                            Upload & OCR
+                          </>
+                        )}
+                      </button>
+                      <div style={{ flex: 1 }}>
+                        <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 4 }}>
+                          Upload ID photo for automatic text extraction
+                        </p>
+                        <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                          Supports: JPEG, PNG, WebP • Max 20MB
+                          {ocrProviders.length > 0 && (
+                            <span style={{ marginLeft: 8, color: 'var(--accent-tertiary)' }}>
+                              • OCR: {ocrProviders.includes('gpt4_vision') ? 'GPT-4V' : ocrProviders[0]}
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+
+                    <textarea
+                      placeholder="Document content will appear here after OCR, or paste text manually *"
+                      value={doc.content}
+                      onChange={e => updateDocument(index, 'content', e.target.value)}
+                      rows={6}
+                      style={{ fontFamily: 'var(--font-mono)', fontSize: 13 }}
+                    />
+                  </div>
+                </div>
+              ))}
+
+              {/* Action Buttons */}
+              <div style={{ display: 'flex', gap: 12 }}>
+                <button onClick={addDocument} className="btn btn-secondary" style={{ flex: 1 }}>
+                  <Plus size={16} />
+                  Add Document
+                </button>
+                <button
+                  onClick={handleVerify}
+                  disabled={loading}
+                  className="btn btn-primary"
+                  style={{ flex: 1 }}
+                >
+                  {loading ? (
+                    <>
+                      <RefreshCw size={16} className="spin" />
+                      Verifying...
+                    </>
+                  ) : (
+                    <>
+                      <Shield size={16} />
+                      Run KYC Verification
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Right: Results */}
+            <div>
+              {result ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                  {/* Status Card */}
+                  <div className="card" style={{
+                    background: getStatusColor(result.status).bg,
+                    border: `1px solid ${getStatusColor(result.status).text}`
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
+                      {result.status === 'approved' ? (
+                        <CheckCircle size={48} style={{ color: 'var(--accent-tertiary)' }} />
+                      ) : result.status === 'rejected' ? (
+                        <XCircle size={48} style={{ color: 'var(--accent-danger)' }} />
+                      ) : result.status === 'escalated' ? (
+                        <AlertTriangle size={48} style={{ color: '#fb923c' }} />
+                      ) : (
+                        <Clock size={48} style={{ color: 'var(--accent-warning)' }} />
+                      )}
+                      <div>
+                        <p style={{ fontSize: 28, fontWeight: 800, textTransform: 'capitalize', marginBottom: 4 }}>
+                          {result.status.replace('_', ' ')}
+                        </p>
+                        <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                          ID: {result.verification_id}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="grid-3" style={{ gap: 12 }}>
+                      <div className="stat-card" style={{ padding: 16 }}>
+                        <p className="stat-value" style={{ fontSize: 32 }}>{result.overall_score}</p>
+                        <p className="stat-label">Overall Score</p>
+                      </div>
+                      <div className="stat-card" style={{ padding: 16 }}>
+                        <span className="tag" style={{
+                          background: getRiskColor(result.risk_assessment.risk_level).bg,
+                          color: getRiskColor(result.risk_assessment.risk_level).text,
+                          border: `1px solid ${getRiskColor(result.risk_assessment.risk_level).border}`,
+                          fontSize: 11,
+                          fontWeight: 700
+                        }}>
+                          {result.risk_assessment.risk_level.toUpperCase()}
+                        </span>
+                        <p className="stat-label" style={{ marginTop: 8 }}>Risk Level</p>
+                      </div>
+                      <div className="stat-card" style={{ padding: 16 }}>
+                        <p className="stat-value" style={{ fontSize: 24 }}>{result.processing_time_ms}ms</p>
+                        <p className="stat-label">Time</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Recommendation */}
+                  <div className="card">
+                    <h3 className="card-title" style={{ marginBottom: 12 }}>📋 Recommendation</h3>
+                    <p style={{ color: 'var(--text-secondary)' }}>{result.recommendation}</p>
+                  </div>
+
+                  {/* Summary */}
+                  <div className="card">
+                    <h3 className="card-title" style={{ marginBottom: 12 }}>📝 Verification Summary</h3>
+                    <div style={{ color: 'var(--text-secondary)', whiteSpace: 'pre-wrap', fontSize: 13 }}>
+                      {result.summary}
+                    </div>
+                  </div>
+
+                  {/* Risk Factors */}
+                  {result.risk_assessment.risk_factors.length > 0 && (
+                    <div className="card">
+                      <h3 className="card-title" style={{ marginBottom: 12 }}>⚠️ Risk Factors</h3>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        {result.risk_assessment.risk_factors.map((factor: string, i: number) => (
+                          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <AlertTriangle size={16} style={{ color: 'var(--accent-warning)' }} />
+                            <span style={{ color: 'var(--text-secondary)' }}>{factor}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Required Actions */}
+                  {result.required_actions?.length > 0 && (
+                    <div className="card">
+                      <h3 className="card-title" style={{ marginBottom: 12 }}>📌 Required Actions</h3>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        {result.required_actions.map((action: string, i: number) => (
+                          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                            <span style={{
+                              width: 24,
+                              height: 24,
+                              borderRadius: '50%',
+                              background: 'rgba(139, 92, 246, 0.2)',
+                              color: 'var(--accent-secondary)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: 11,
+                              fontWeight: 700
+                            }}>
+                              {i + 1}
+                            </span>
+                            <span style={{ color: 'var(--text-secondary)' }}>{action}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="card" style={{
+                  height: 'calc(100vh - 300px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
+                    <Shield size={64} style={{ opacity: 0.2, marginBottom: 16 }} />
+                    <p style={{ fontSize: 15, marginBottom: 8 }}>Enter customer details and run verification</p>
+                    <p style={{ fontSize: 12 }}>Results will appear here</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
+        )}
 
-          {/* Right: Results */}
-          <div className="space-y-4">
-            {result ? (
-              <>
-                {/* Status Card */}
-                <div className={`rounded-xl border p-6 ${
-                  result.status === 'approved' ? 'bg-emerald-500/10 border-emerald-500/30' :
-                  result.status === 'rejected' ? 'bg-red-500/10 border-red-500/30' :
-                  result.status === 'escalated' ? 'bg-orange-500/10 border-orange-500/30' :
-                  'bg-amber-500/10 border-amber-500/30'
-                }`}>
-                  <div className="flex items-center gap-4 mb-4">
-                    {result.status === 'approved' ? (
-                      <CheckCircle className="w-12 h-12 text-emerald-400" />
-                    ) : result.status === 'rejected' ? (
-                      <XCircle className="w-12 h-12 text-red-400" />
-                    ) : result.status === 'escalated' ? (
-                      <AlertTriangle className="w-12 h-12 text-orange-400" />
-                    ) : (
-                      <Clock className="w-12 h-12 text-amber-400" />
-                    )}
-                    <div>
-                      <p className="text-2xl font-bold text-white capitalize">{result.status.replace('_', ' ')}</p>
-                      <p className="text-sm text-gray-400">Verification ID: {result.verification_id}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-4 mt-4">
-                    <div className="bg-black/20 rounded-lg p-3 text-center">
-                      <p className="text-3xl font-bold text-white">{result.overall_score}</p>
-                      <p className="text-xs text-gray-400">Overall Score</p>
-                    </div>
-                    <div className="bg-black/20 rounded-lg p-3 text-center">
-                      <span className={`px-2 py-1 rounded text-sm font-medium ${RISK_COLORS[result.risk_assessment.risk_level as keyof typeof RISK_COLORS]}`}>
-                        {result.risk_assessment.risk_level.toUpperCase()}
-                      </span>
-                      <p className="text-xs text-gray-400 mt-1">Risk Level</p>
-                    </div>
-                    <div className="bg-black/20 rounded-lg p-3 text-center">
-                      <p className="text-2xl font-bold text-white">{result.processing_time_ms}ms</p>
-                      <p className="text-xs text-gray-400">Processing Time</p>
-                    </div>
-                  </div>
-                </div>
+        {/* Cases Tab */}
+        {activeTab === 'cases' && (
+          <div className="card">
+            <div className="card-header">
+              <h2 className="card-title">KYC Cases</h2>
+              <button onClick={loadCases} className="btn btn-secondary btn-sm">
+                <RefreshCw size={14} />
+                Refresh
+              </button>
+            </div>
 
-                {/* Recommendation */}
-                <div className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-                  <h3 className="text-lg font-semibold text-white mb-3">📋 Recommendation</h3>
-                  <p className="text-gray-300">{result.recommendation}</p>
-                </div>
-
-                {/* Summary */}
-                <div className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-                  <h3 className="text-lg font-semibold text-white mb-3">📝 Verification Summary</h3>
-                  <div className="text-gray-300 whitespace-pre-wrap text-sm">{result.summary}</div>
-                </div>
-
-                {/* Risk Factors */}
-                {result.risk_assessment.risk_factors.length > 0 && (
-                  <div className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-                    <h3 className="text-lg font-semibold text-white mb-3">⚠️ Risk Factors</h3>
-                    <ul className="space-y-2">
-                      {result.risk_assessment.risk_factors.map((factor: string, i: number) => (
-                        <li key={i} className="flex items-center gap-2 text-gray-300">
-                          <AlertTriangle className="w-4 h-4 text-amber-400" />
-                          {factor}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Required Actions */}
-                {result.required_actions.length > 0 && (
-                  <div className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-                    <h3 className="text-lg font-semibold text-white mb-3">📌 Required Actions</h3>
-                    <ul className="space-y-2">
-                      {result.required_actions.map((action: string, i: number) => (
-                        <li key={i} className="flex items-center gap-2 text-gray-300">
-                          <span className="w-6 h-6 rounded-full bg-violet-500/20 text-violet-400 
-                                         flex items-center justify-center text-xs font-bold">
-                            {i + 1}
-                          </span>
-                          {action}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </>
+            {cases.length === 0 ? (
+              <div style={{
+                padding: 60,
+                textAlign: 'center',
+                color: 'var(--text-muted)'
+              }}>
+                <FileText size={48} style={{ opacity: 0.2, marginBottom: 16 }} />
+                <p style={{ marginBottom: 8 }}>No KYC cases yet</p>
+                <p style={{ fontSize: 13 }}>Run a verification to create your first case</p>
+              </div>
             ) : (
-              <div className="h-full flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                  <Shield className="w-16 h-16 mx-auto mb-4 opacity-20" />
-                  <p>Enter customer details and run verification</p>
-                  <p className="text-sm mt-2">Results will appear here</p>
-                </div>
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{
+                  width: '100%',
+                  borderCollapse: 'collapse'
+                }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                      <th style={{ padding: 12, textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Customer</th>
+                      <th style={{ padding: 12, textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Status</th>
+                      <th style={{ padding: 12, textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Risk</th>
+                      <th style={{ padding: 12, textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Score</th>
+                      <th style={{ padding: 12, textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Date</th>
+                      <th style={{ padding: 12, textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cases.map(c => (
+                      <tr key={c.id} style={{
+                        borderBottom: '1px solid var(--border-color)',
+                        transition: 'background var(--transition-fast)'
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-hover)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                      >
+                        <td style={{ padding: 12 }}>
+                          <p style={{ fontWeight: 600, marginBottom: 4 }}>
+                            {c.request_data.customer.first_name} {c.request_data.customer.last_name}
+                          </p>
+                          <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>{c.id}</p>
+                        </td>
+                        <td style={{ padding: 12 }}>
+                          <span className="tag" style={{
+                            background: getStatusColor(c.status).bg,
+                            color: getStatusColor(c.status).text
+                          }}>
+                            {c.status.replace('_', ' ').toUpperCase()}
+                          </span>
+                        </td>
+                        <td style={{ padding: 12 }}>
+                          <span className="tag" style={{
+                            background: getRiskColor(c.risk_level).bg,
+                            color: getRiskColor(c.risk_level).text,
+                            border: `1px solid ${getRiskColor(c.risk_level).border}`
+                          }}>
+                            {c.risk_level.toUpperCase()}
+                          </span>
+                        </td>
+                        <td style={{ padding: 12 }}>
+                          <span style={{ fontFamily: 'var(--font-mono)' }}>{c.overall_score}</span>
+                        </td>
+                        <td style={{ padding: 12, color: 'var(--text-secondary)', fontSize: 13 }}>
+                          {new Date(c.created_at).toLocaleDateString()}
+                        </td>
+                        <td style={{ padding: 12 }}>
+                          <button
+                            onClick={() => setSelectedCase(c)}
+                            style={{
+                              background: 'transparent',
+                              border: 'none',
+                              color: 'var(--accent-secondary)',
+                              cursor: 'pointer',
+                              padding: 6
+                            }}
+                          >
+                            <Eye size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Cases Tab */}
-      {activeTab === 'cases' && (
-        <div className="bg-gray-800/50 rounded-xl border border-gray-700/50 overflow-hidden">
-          <div className="p-4 border-b border-gray-700/50 flex items-center justify-between">
-            <h3 className="font-semibold text-white">KYC Cases</h3>
-            <button
-              onClick={loadCases}
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <RefreshCw className="w-4 h-4" />
-            </button>
-          </div>
-          
-          {cases.length === 0 ? (
-            <div className="p-12 text-center text-gray-500">
-              <FileText className="w-12 h-12 mx-auto mb-3 opacity-20" />
-              <p>No KYC cases yet</p>
-              <p className="text-sm">Run a verification to create your first case</p>
-            </div>
-          ) : (
-            <table className="w-full">
-              <thead className="bg-gray-900/50">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Customer</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Status</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Risk</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Score</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Date</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-700/50">
-                {cases.map(c => (
-                  <tr key={c.id} className="hover:bg-gray-700/30 transition-colors">
-                    <td className="px-4 py-3">
-                      <p className="text-white font-medium">
-                        {c.request_data.customer.first_name} {c.request_data.customer.last_name}
-                      </p>
-                      <p className="text-xs text-gray-500">{c.id}</p>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${STATUS_COLORS[c.status as keyof typeof STATUS_COLORS]}`}>
-                        {c.status.replace('_', ' ').toUpperCase()}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className={`px-2 py-1 rounded text-xs font-medium border ${RISK_COLORS[c.risk_level as keyof typeof RISK_COLORS]}`}>
-                        {c.risk_level.toUpperCase()}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="text-white font-mono">{c.overall_score}</span>
-                    </td>
-                    <td className="px-4 py-3 text-gray-400 text-sm">
-                      {new Date(c.created_at).toLocaleDateString()}
-                    </td>
-                    <td className="px-4 py-3">
-                      <button
-                        onClick={() => setSelectedCase(c)}
-                        className="text-violet-400 hover:text-violet-300 transition-colors"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-      )}
-
-      {/* Stats Tab */}
-      {activeTab === 'stats' && stats && (
-        <div className="grid grid-cols-4 gap-6">
-          <div className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-            <p className="text-4xl font-bold text-white">{stats.total_cases}</p>
-            <p className="text-gray-400">Total Cases</p>
-          </div>
-          <div className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-            <p className="text-4xl font-bold text-emerald-400">{stats.approval_rate}%</p>
-            <p className="text-gray-400">Approval Rate</p>
-          </div>
-          <div className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-            <p className="text-4xl font-bold text-violet-400">{stats.average_score}</p>
-            <p className="text-gray-400">Avg Score</p>
-          </div>
-          <div className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-            <p className="text-4xl font-bold text-amber-400">{stats.by_status?.manual_review || 0}</p>
-            <p className="text-gray-400">Pending Review</p>
-          </div>
-
-          {/* Status Breakdown */}
-          <div className="col-span-2 bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-            <h3 className="font-semibold text-white mb-4">By Status</h3>
-            <div className="space-y-3">
-              {Object.entries(stats.by_status || {}).map(([status, count]) => (
-                <div key={status} className="flex items-center justify-between">
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${STATUS_COLORS[status as keyof typeof STATUS_COLORS]}`}>
-                    {status.replace('_', ' ').toUpperCase()}
-                  </span>
-                  <span className="text-white font-mono">{count as number}</span>
+        {/* Stats Tab */}
+        {activeTab === 'stats' && stats && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div className="grid-4">
+              <div className="stat-card">
+                <div className="stat-icon blue">
+                  <FileText size={20} />
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Risk Breakdown */}
-          <div className="col-span-2 bg-gray-800/50 rounded-xl border border-gray-700/50 p-6">
-            <h3 className="font-semibold text-white mb-4">By Risk Level</h3>
-            <div className="space-y-3">
-              {Object.entries(stats.by_risk_level || {}).map(([risk, count]) => (
-                <div key={risk} className="flex items-center justify-between">
-                  <span className={`px-2 py-1 rounded text-xs font-medium border ${RISK_COLORS[risk as keyof typeof RISK_COLORS]}`}>
-                    {risk.toUpperCase()}
-                  </span>
-                  <span className="text-white font-mono">{count as number}</span>
+                <div className="stat-value">{stats.total_cases}</div>
+                <div className="stat-label">Total Cases</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon green">
+                  <CheckCircle size={20} />
                 </div>
-              ))}
+                <div className="stat-value">{stats.approval_rate}%</div>
+                <div className="stat-label">Approval Rate</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon purple">
+                  <Shield size={20} />
+                </div>
+                <div className="stat-value">{stats.average_score}</div>
+                <div className="stat-label">Avg Score</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon orange">
+                  <Clock size={20} />
+                </div>
+                <div className="stat-value">{stats.by_status?.manual_review || 0}</div>
+                <div className="stat-label">Pending Review</div>
+              </div>
+            </div>
+
+            <div className="grid-2">
+              {/* Status Breakdown */}
+              <div className="card">
+                <h3 className="card-title" style={{ marginBottom: 16 }}>By Status</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {Object.entries(stats.by_status || {}).map(([status, count]) => (
+                    <div key={status} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <span className="tag" style={{
+                        background: getStatusColor(status).bg,
+                        color: getStatusColor(status).text
+                      }}>
+                        {status.replace('_', ' ').toUpperCase()}
+                      </span>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{count as number}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Risk Breakdown */}
+              <div className="card">
+                <h3 className="card-title" style={{ marginBottom: 16 }}>By Risk Level</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {Object.entries(stats.by_risk_level || {}).map(([risk, count]) => (
+                    <div key={risk} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <span className="tag" style={{
+                        background: getRiskColor(risk).bg,
+                        color: getRiskColor(risk).text,
+                        border: `1px solid ${getRiskColor(risk).border}`
+                      }}>
+                        {risk.toUpperCase()}
+                      </span>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{count as number}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Case Detail Modal */}
       {selectedCase && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-             onClick={() => setSelectedCase(null)}>
-          <div className="bg-gray-800 rounded-xl border border-gray-700 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
-               onClick={e => e.stopPropagation()}>
-            <div className="p-6 border-b border-gray-700 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-white">Case Details</h3>
-              <button onClick={() => setSelectedCase(null)} className="text-gray-400 hover:text-white">
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(0, 0, 0, 0.7)',
+          backdropFilter: 'blur(8px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: 24
+        }}
+        onClick={() => setSelectedCase(null)}
+        >
+          <div className="card" style={{
+            maxWidth: 700,
+            width: '100%',
+            maxHeight: '80vh',
+            overflow: 'auto'
+          }}
+          onClick={e => e.stopPropagation()}
+          >
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: 24
+            }}>
+              <h3 style={{ fontSize: 20, fontWeight: 700 }}>Case Details</h3>
+              <button
+                onClick={() => setSelectedCase(null)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  fontSize: 20
+                }}
+              >
                 ✕
               </button>
             </div>
-            <div className="p-6 space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+              <div className="grid-2" style={{ gap: 16 }}>
                 <div>
-                  <p className="text-gray-400 text-sm">Customer</p>
-                  <p className="text-white font-medium">
+                  <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>Customer</p>
+                  <p style={{ fontWeight: 600 }}>
                     {selectedCase.request_data.customer.first_name} {selectedCase.request_data.customer.last_name}
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-400 text-sm">Status</p>
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${STATUS_COLORS[selectedCase.status as keyof typeof STATUS_COLORS]}`}>
+                  <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>Status</p>
+                  <span className="tag" style={{
+                    background: getStatusColor(selectedCase.status).bg,
+                    color: getStatusColor(selectedCase.status).text
+                  }}>
                     {selectedCase.status.replace('_', ' ').toUpperCase()}
                   </span>
                 </div>
                 <div>
-                  <p className="text-gray-400 text-sm">Risk Level</p>
-                  <span className={`px-2 py-1 rounded text-xs font-medium border ${RISK_COLORS[selectedCase.risk_level as keyof typeof RISK_COLORS]}`}>
+                  <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>Risk Level</p>
+                  <span className="tag" style={{
+                    background: getRiskColor(selectedCase.risk_level).bg,
+                    color: getRiskColor(selectedCase.risk_level).text,
+                    border: `1px solid ${getRiskColor(selectedCase.risk_level).border}`
+                  }}>
                     {selectedCase.risk_level.toUpperCase()}
                   </span>
                 </div>
                 <div>
-                  <p className="text-gray-400 text-sm">Score</p>
-                  <p className="text-white font-mono">{selectedCase.overall_score}/100</p>
+                  <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>Score</p>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{selectedCase.overall_score}/100</p>
                 </div>
               </div>
-              
+
               <div>
-                <p className="text-gray-400 text-sm mb-2">Summary</p>
-                <div className="bg-gray-900/50 rounded-lg p-4 text-gray-300 text-sm whitespace-pre-wrap">
+                <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8 }}>Summary</p>
+                <div style={{
+                  background: 'var(--bg-primary)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: 16,
+                  color: 'var(--text-secondary)',
+                  fontSize: 13,
+                  whiteSpace: 'pre-wrap'
+                }}>
                   {selectedCase.response_data.summary}
                 </div>
               </div>
-              
+
               <div>
-                <p className="text-gray-400 text-sm mb-2">Recommendation</p>
-                <p className="text-white">{selectedCase.response_data.recommendation}</p>
+                <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8 }}>Recommendation</p>
+                <p style={{ color: 'var(--text-primary)' }}>{selectedCase.response_data.recommendation}</p>
               </div>
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
-
