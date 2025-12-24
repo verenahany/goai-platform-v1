@@ -651,20 +651,20 @@ body {
   scroll-behavior: auto;
 }
 
-/* Messages - Modern ChatGPT Style */
+/* Messages - Clean Compact Style */
 .message {
   width: 100%;
-  padding: 28px 0;
+  padding: 20px 0;
   font-size: 15px;
-  line-height: 1.75;
-  animation: messageSlide 0.25s ease-out;
+  line-height: 1.65;
+  animation: messageSlide 0.2s ease-out;
   transition: background var(--transition-fast);
 }
 
 @keyframes messageSlide {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
@@ -673,49 +673,41 @@ body {
 }
 
 .message.user {
-  background: transparent;
-}
-
-.message.user > div > div:first-child {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.35);
-  color: white;
+  background: var(--bg-primary);
 }
 
 .message.assistant {
   background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
-.message.assistant > div > div:first-child {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.12));
-  border: 2px solid var(--border-color);
+.message-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.message-role-label {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   flex-shrink: 0;
-  color: var(--accent-primary);
+  font-size: 16px;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
 }
 
-.message > div {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 32px;
-}
-
-.message > div > div:first-child {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
+.message-content-wrapper {
+  flex: 1;
+  min-width: 0;
 }
 
 .message-sources {

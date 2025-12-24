@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, FileText, RefreshCw, Cpu, Cloud, ChevronDown, Zap, Database, MessageSquare, Files, Download, FileJson, FileCode, Loader2, ThumbsUp, ThumbsDown, MessageCircle, Copy, Check } from 'lucide-react';
+import { Bot, User, FileText, RefreshCw, Cpu, Cloud, ChevronDown, Zap, Database, MessageSquare, Files, Download, FileJson, FileCode, Loader2, ThumbsUp, ThumbsDown, Copy, Check } from 'lucide-react';
 import { useToast } from '../components/Toast';
 import { ragApi, llmApi, getAuthHeaders } from '../api/client';
 
@@ -860,11 +860,11 @@ export default function ChatPage() {
 
           {messages.map((msg, index) => (
             <div key={index} className={`message ${msg.role}`}>
-              <div>
-                <div>
+              <div className="message-inner">
+                <div className="message-role-label">
                   {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
                 </div>
-                <div>
+                <div className="message-content-wrapper">
                   <div style={{ whiteSpace: 'pre-wrap' }}>
                     {msg.content}
                     {msg.isStreaming && (
