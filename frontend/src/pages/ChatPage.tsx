@@ -506,11 +506,11 @@ export default function ChatPage() {
             <h1 className="page-title">RAG Chat</h1>
             <p className="page-subtitle">Ask questions about your documents</p>
           </div>
-          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             {/* RAG Mode Selector */}
-            <div style={{ 
-              display: 'flex', 
-              background: 'var(--bg-tertiary)', 
+            <div style={{
+              display: 'flex',
+              background: 'var(--bg-tertiary)',
               borderRadius: 'var(--radius-md)',
               padding: 2,
               gap: 2
@@ -518,35 +518,35 @@ export default function ChatPage() {
               <button
                 className={`btn btn-sm ${ragMode === 'none' ? 'btn-primary' : ''}`}
                 onClick={() => setRagMode('none')}
-                style={{ 
-                  padding: '6px 10px', 
-                  fontSize: 12,
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 4,
+                style={{
+                  padding: '4px 8px',
+                  fontSize: 11,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
                   background: ragMode === 'none' ? undefined : 'transparent',
                   border: 'none'
                 }}
                 title="Chat without documents (pure LLM)"
               >
-                <MessageSquare size={12} />
+                <MessageSquare size={11} />
                 No Docs
               </button>
               <button
                 className={`btn btn-sm ${ragMode === 'all' ? 'btn-primary' : ''}`}
                 onClick={() => setRagMode('all')}
-                style={{ 
-                  padding: '6px 10px', 
-                  fontSize: 12,
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 4,
+                style={{
+                  padding: '4px 8px',
+                  fontSize: 11,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
                   background: ragMode === 'all' ? undefined : 'transparent',
                   border: 'none'
                 }}
                 title="Use all documents as context"
               >
-                <Database size={12} />
+                <Database size={11} />
                 All Docs
               </button>
               <button
@@ -555,30 +555,30 @@ export default function ChatPage() {
                   setRagMode('selected');
                   setShowDocSelector(true);
                 }}
-                style={{ 
-                  padding: '6px 10px', 
-                  fontSize: 12,
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 4,
+                style={{
+                  padding: '4px 8px',
+                  fontSize: 11,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
                   background: ragMode === 'selected' ? undefined : 'transparent',
                   border: 'none'
                 }}
                 title="Select specific documents"
               >
-                <Files size={12} />
+                <Files size={11} />
                 Select ({selectedDocs.size})
               </button>
             </div>
-            
+
             {/* Streaming Toggle */}
             <button
               className={`btn ${useStreaming ? 'btn-primary' : 'btn-secondary'}`}
               onClick={() => setUseStreaming(!useStreaming)}
-              style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+              style={{ display: 'flex', alignItems: 'center', gap: 4 }}
               title={useStreaming ? 'Streaming enabled - tokens appear live' : 'Streaming disabled'}
             >
-              <Zap size={14} />
+              <Zap size={12} />
               {useStreaming ? 'Stream' : 'Batch'}
             </button>
             
@@ -587,20 +587,21 @@ export default function ChatPage() {
               <button
                 className="btn btn-secondary"
                 onClick={() => setShowModelDropdown(!showModelDropdown)}
-                style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 8,
-                  minWidth: 180
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  minWidth: 140,
+                  padding: '4px 8px'
                 }}
               >
                 <span style={{ color: getProviderColor(currentModel?.provider || 'openai') }}>
                   {getProviderIcon(currentModel?.provider || 'openai')}
                 </span>
-                <span style={{ flex: 1, textAlign: 'left' }}>
+                <span style={{ flex: 1, textAlign: 'left', fontSize: 11 }}>
                   {selectedModel}
                 </span>
-                <ChevronDown size={14} />
+                <ChevronDown size={12} />
               </button>
               
               {showModelDropdown && (
@@ -612,44 +613,44 @@ export default function ChatPage() {
                   background: 'var(--bg-secondary)',
                   border: '1px solid var(--border-color)',
                   borderRadius: 'var(--radius-md)',
-                  padding: 8,
-                  minWidth: 220,
+                  padding: 6,
+                  minWidth: 180,
                   zIndex: 100,
                   boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
                 }}>
-                  <div style={{ 
-                    fontSize: 11, 
-                    color: 'var(--text-muted)', 
-                    marginBottom: 8,
-                    padding: '0 8px'
+                  <div style={{
+                    fontSize: 9,
+                    color: 'var(--text-muted)',
+                    marginBottom: 6,
+                    padding: '0 6px'
                   }}>
                     SELECT MODEL
                   </div>
-                  
+
                   {/* Group by provider */}
                   {['ollama', 'openai', 'anthropic'].map(provider => {
                     const providerModels = models.filter(m => m.provider === provider);
                     if (providerModels.length === 0) return null;
-                    
+
                     return (
                       <div key={provider}>
                         <div style={{
-                          fontSize: 10,
+                          fontSize: 9,
                           color: getProviderColor(provider),
-                          padding: '8px 8px 4px',
+                          padding: '6px 6px 3px',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: 6,
+                          gap: 4,
                           textTransform: 'uppercase',
-                          letterSpacing: 1
+                          letterSpacing: 0.5
                         }}>
                           {getProviderIcon(provider)}
                           {provider}
-                          {provider === 'ollama' && <span style={{ 
-                            fontSize: 9, 
+                          {provider === 'ollama' && <span style={{
+                            fontSize: 8,
                             background: 'rgba(16, 185, 129, 0.2)',
-                            padding: '2px 6px',
-                            borderRadius: 4
+                            padding: '1px 4px',
+                            borderRadius: 3
                           }}>LOCAL</span>}
                         </div>
                         {providerModels.map(model => (
@@ -662,16 +663,16 @@ export default function ChatPage() {
                             style={{
                               display: 'block',
                               width: '100%',
-                              padding: '8px 12px',
+                              padding: '6px 8px',
                               textAlign: 'left',
-                              background: model.id === selectedModel 
-                                ? 'var(--bg-hover)' 
+                              background: model.id === selectedModel
+                                ? 'var(--bg-hover)'
                                 : 'transparent',
                               border: 'none',
                               borderRadius: 'var(--radius-sm)',
                               color: 'var(--text-primary)',
                               cursor: 'pointer',
-                              fontSize: 13
+                              fontSize: 11
                             }}
                           >
                             {model.name}
@@ -686,13 +687,13 @@ export default function ChatPage() {
             
             {/* Export Button */}
             <div style={{ position: 'relative' }}>
-              <button 
+              <button
                 className="btn btn-secondary"
                 onClick={() => setShowExportMenu(!showExportMenu)}
                 disabled={messages.length === 0 || exporting}
                 title="Export conversation"
               >
-                {exporting ? <Loader2 size={18} className="spin" /> : <Download size={18} />}
+                {exporting ? <Loader2 size={14} className="spin" /> : <Download size={14} />}
                 Export
               </button>
               
@@ -705,8 +706,8 @@ export default function ChatPage() {
                   background: 'var(--bg-secondary)',
                   border: '1px solid var(--border-color)',
                   borderRadius: 'var(--radius-md)',
-                  padding: 8,
-                  minWidth: 160,
+                  padding: 6,
+                  minWidth: 140,
                   zIndex: 100,
                   boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
                 }}>
@@ -715,18 +716,19 @@ export default function ChatPage() {
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: 8,
+                      gap: 6,
                       width: '100%',
-                      padding: '8px 12px',
+                      padding: '6px 8px',
                       background: 'transparent',
                       border: 'none',
                       borderRadius: 'var(--radius-sm)',
                       color: 'var(--text-primary)',
                       cursor: 'pointer',
-                      textAlign: 'left'
+                      textAlign: 'left',
+                      fontSize: 11
                     }}
                   >
-                    <FileCode size={16} color="#10b981" />
+                    <FileCode size={13} color="#10b981" />
                     Markdown (.md)
                   </button>
                   <button
@@ -734,18 +736,19 @@ export default function ChatPage() {
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: 8,
+                      gap: 6,
                       width: '100%',
-                      padding: '8px 12px',
+                      padding: '6px 8px',
                       background: 'transparent',
                       border: 'none',
                       borderRadius: 'var(--radius-sm)',
                       color: 'var(--text-primary)',
                       cursor: 'pointer',
-                      textAlign: 'left'
+                      textAlign: 'left',
+                      fontSize: 11
                     }}
                   >
-                    <FileJson size={16} color="#00d4ff" />
+                    <FileJson size={13} color="#00d4ff" />
                     JSON (.json)
                   </button>
                   <button
@@ -753,26 +756,27 @@ export default function ChatPage() {
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: 8,
+                      gap: 6,
                       width: '100%',
-                      padding: '8px 12px',
+                      padding: '6px 8px',
                       background: 'transparent',
                       border: 'none',
                       borderRadius: 'var(--radius-sm)',
                       color: 'var(--text-primary)',
                       cursor: 'pointer',
-                      textAlign: 'left'
+                      textAlign: 'left',
+                      fontSize: 11
                     }}
                   >
-                    <FileText size={16} color="#8b5cf6" />
+                    <FileText size={13} color="#8b5cf6" />
                     HTML (.html)
                   </button>
                 </div>
               )}
             </div>
-            
+
             <button className="btn btn-secondary" onClick={createNewConversation}>
-              <RefreshCw size={18} />
+              <RefreshCw size={14} />
               New Chat
             </button>
           </div>
@@ -781,7 +785,7 @@ export default function ChatPage() {
 
       <div className="chat-container">
         <div className="chat-messages" ref={messagesContainerRef} onScroll={handleMessagesScroll}>
-          {messages.length === 0 && (
+          {messages.length === 0 ? (
             <div style={{
               display: 'flex',
               flexDirection: 'column',
@@ -790,7 +794,8 @@ export default function ChatPage() {
               height: '100%',
               color: 'var(--text-muted)',
               textAlign: 'center',
-              gap: 16
+              gap: 24,
+              padding: '0 24px'
             }}>
               <div style={{
                 width: 80,
@@ -804,17 +809,44 @@ export default function ChatPage() {
                 <Bot size={40} color="var(--accent-primary)" />
               </div>
               <div>
-                <h3 style={{ color: 'var(--text-primary)', marginBottom: 8 }}>Start a conversation</h3>
-                <p style={{ maxWidth: 400 }}>
+                <h3 style={{ color: 'var(--text-primary)', marginBottom: 8, fontSize: 24 }}>Start a conversation</h3>
+                <p style={{ maxWidth: 500, fontSize: 15 }}>
                   Ask questions about your ingested documents. I'll find relevant context and provide answers with source citations.
                 </p>
               </div>
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center', marginTop: 8 }}>
-                {['What is machine learning?', 'Tell me about Python', 'How does AI work?'].map((q, i) => (
+
+              {/* Centered Input Box */}
+              <div style={{ width: '100%', maxWidth: 800 }}>
+                <div className="chat-input-wrapper">
+                  <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Ask a question about your documents..."
+                    disabled={loading}
+                    style={{ flex: 1 }}
+                  />
+                  <button
+                    className="btn btn-primary btn-icon"
+                    onClick={sendMessage}
+                    disabled={loading || !input.trim()}
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="12" y1="19" x2="12" y2="5"></line>
+                      <polyline points="5 12 12 5 19 12"></polyline>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {/* Suggested Questions Below Input */}
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center', maxWidth: 800 }}>
+                {['What is machine learning?', 'Tell me about Python', 'How does AI work?', 'Explain neural networks'].map((q, i) => (
                   <button
                     key={i}
                     className="btn btn-secondary"
-                    style={{ fontSize: 13 }}
+                    style={{ fontSize: 13, padding: '8px 16px' }}
                     onClick={() => {
                       setInput(q);
                     }}
@@ -824,42 +856,31 @@ export default function ChatPage() {
                 ))}
               </div>
             </div>
-          )}
+          ) : null}
 
           {messages.map((msg, index) => (
             <div key={index} className={`message ${msg.role}`}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                <div style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: '50%',
-                  background: msg.role === 'user'
-                    ? 'rgba(255,255,255,0.2)'
-                    : 'var(--bg-hover)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
+              <div>
+                <div>
                   {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
                 </div>
-                <div style={{ flex: 1 }}>
+                <div>
                   <div style={{ whiteSpace: 'pre-wrap' }}>
                     {msg.content}
                     {msg.isStreaming && (
-                      <span 
-                        style={{ 
+                      <span
+                        style={{
                           display: 'inline-block',
                           width: 8,
                           height: 16,
                           background: 'var(--accent-primary)',
                           marginLeft: 2,
                           animation: 'blink 1s infinite'
-                        }} 
+                        }}
                       />
                     )}
                   </div>
-                  
+
                   {/* Model, Latency & Feedback for assistant messages */}
                   {msg.role === 'assistant' && !msg.isStreaming && (
                     <div style={{
@@ -873,9 +894,9 @@ export default function ChatPage() {
                       {/* Model & Latency */}
                       <div style={{ display: 'flex', gap: 12, fontSize: 11, color: 'var(--text-muted)', flex: 1 }}>
                         {msg.model && (
-                          <span style={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
+                          <span style={{
+                            display: 'flex',
+                            alignItems: 'center',
                             gap: 4,
                             color: msg.model.includes('llama') ? '#10b981' : 'var(--accent-primary)'
                           }}>
@@ -885,13 +906,13 @@ export default function ChatPage() {
                         )}
                         {msg.latency_ms && (
                           <span>
-                            {msg.latency_ms > 1000 
-                              ? `${(msg.latency_ms / 1000).toFixed(1)}s` 
+                            {msg.latency_ms > 1000
+                              ? `${(msg.latency_ms / 1000).toFixed(1)}s`
                               : `${Math.round(msg.latency_ms)}ms`}
                           </span>
                         )}
                       </div>
-                      
+
                       {/* Action Buttons */}
                       <div style={{ display: 'flex', gap: 4 }}>
                         {/* Copy Button */}
@@ -914,7 +935,7 @@ export default function ChatPage() {
                         >
                           {copiedIndex === index ? <Check size={14} /> : <Copy size={14} />}
                         </button>
-                        
+
                         {/* Feedback Buttons */}
                         <button
                           onClick={() => handleQuickFeedback(index, 'positive')}
@@ -1019,29 +1040,32 @@ export default function ChatPage() {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="chat-input-container">
-          <div className="chat-input-wrapper">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Ask a question about your documents..."
-              disabled={loading}
-              style={{ flex: 1 }}
-            />
-            <button
-              className="btn btn-primary btn-icon"
-              onClick={sendMessage}
-              disabled={loading || !input.trim()}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="12" y1="19" x2="12" y2="5"></line>
-                <polyline points="5 12 12 5 19 12"></polyline>
-              </svg>
-            </button>
+        {/* Only show bottom input when there are messages */}
+        {messages.length > 0 && (
+          <div className="chat-input-container">
+            <div className="chat-input-wrapper">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Ask a question about your documents..."
+                disabled={loading}
+                style={{ flex: 1 }}
+              />
+              <button
+                className="btn btn-primary btn-icon"
+                onClick={sendMessage}
+                disabled={loading || !input.trim()}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="19" x2="12" y2="5"></line>
+                  <polyline points="5 12 12 5 19 12"></polyline>
+                </svg>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       
       <style>{`

@@ -269,7 +269,7 @@ modules/customer_kyc/
 
 api/v1/customer_kyc.py   # API endpoints
 
-ui/console/src/pages/KYCPage.tsx  # UI component
+frontend/src/pages/KYCPage.tsx    # UI component
 ```
 
 ---

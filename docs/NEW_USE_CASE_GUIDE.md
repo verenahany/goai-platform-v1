@@ -41,7 +41,7 @@ Every use case in GoAI follows a **3-layer pattern**:
 │                            │                                     │
 │                            ▼                                     │
 │  ┌─────────────────────────────────────────────────────────┐   │
-│  │  LAYER 3: UI (ui/console/src/pages/YourFeaturePage.tsx) │   │
+│  │  LAYER 3: UI (frontend/src/pages/YourFeaturePage.tsx)   │   │
 │  │  - React component                                       │   │
 │  │  - API client calls                                      │   │
 │  │  - User interface                                        │   │
@@ -60,7 +60,7 @@ goai-platform-v1/
 │   └── your_feature/
 │       ├── __init__.py          # Module exports
 │       └── engine.py            # Core logic
-├── ui/console/src/pages/
+├── frontend/src/pages/
 │   └── YourFeaturePage.tsx      # UI component
 └── use_cases/
     └── your_feature/

@@ -154,21 +154,21 @@ body {
 }
 
 .sidebar-header {
-  padding: 12px 10px;
+  padding: 8px 10px;
   border-bottom: 1px solid var(--border-color);
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
   position: relative;
 }
 
 .sidebar.collapsed .sidebar-header {
   flex-direction: column;
   align-items: center;
-  padding: 10px 6px;
-  gap: 10px;
+  padding: 8px 6px;
+  gap: 8px;
 }
 
 .sidebar-toggle {
@@ -566,7 +566,7 @@ body {
 
 /* Page Header - Ultra Compact */
 .page-header {
-  padding: 10px 20px;
+  padding: 8px 16px;
   border-bottom: 1px solid var(--border-color);
   background: var(--bg-secondary);
   flex-shrink: 0;
@@ -574,18 +574,18 @@ body {
 }
 
 .page-title {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
   margin-bottom: 1px;
   letter-spacing: -0.5px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .page-subtitle {
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
 }
 
@@ -633,8 +633,8 @@ body {
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 140px);
-  max-height: calc(100vh - 140px);
+  height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
   overflow: hidden;
 }
 
@@ -676,7 +676,7 @@ body {
   background: transparent;
 }
 
-.message.user > div > div:first-child > div:first-child {
+.message.user > div > div:first-child {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -693,7 +693,7 @@ body {
   background: var(--bg-secondary);
 }
 
-.message.assistant > div > div:first-child > div:first-child {
+.message.assistant > div > div:first-child {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -728,10 +728,10 @@ body {
 
 /* Chat Input - Modern Centered */
 .chat-input-container {
-  padding: 20px 24px;
+  padding: 20px 24px 12px 24px;
   background: var(--bg-primary);
   flex-shrink: 0;
-  border-top: 1px solid var(--border-color);
+  /* border-top: 1px solid var(--border-color); */
 }
 
 .chat-input-wrapper {
@@ -925,9 +925,9 @@ select.compact-select {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
   font-weight: 600;
   border-radius: var(--radius-md);
   cursor: pointer;

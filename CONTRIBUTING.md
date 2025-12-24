@@ -41,7 +41,7 @@
 
 6. **Start the frontend** (in a new terminal)
    ```bash
-   cd ui/console
+   cd frontend
    npm install
    npm run dev
    ```

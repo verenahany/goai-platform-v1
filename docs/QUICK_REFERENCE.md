@@ -248,7 +248,7 @@ app.include_router(my_feature.router, prefix="/api/v1/my-feature", tags=["My Fea
 ### 4️⃣ Create UI Page (Optional)
 
 ```tsx
-// ui/console/src/pages/MyFeaturePage.tsx
+// frontend/src/pages/MyFeaturePage.tsx
 export default function MyFeaturePage() {
   return <div className="p-8">My Feature UI</div>;
 }
@@ -367,7 +367,7 @@ goai-platform-v1/
 ├── api/v1/              # REST endpoints
 ├── core/                # Infrastructure (LLM, Vector, Auth)
 ├── modules/             # Feature modules (Agents, RAG, Evals)
-├── ui/console/          # React frontend
+├── frontend/            # React frontend
 ├── use_cases/           # Example implementations
 ├── data/                # SQLite databases
 └── docs/                # Documentation

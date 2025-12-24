@@ -96,7 +96,7 @@ cp .env.example .env
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 # 4. In a new terminal, start UI
-cd ui/console
+cd frontend
 npm install
 npm run dev
 ```
@@ -797,7 +797,7 @@ goai-platform-v1/
 │   ├── ebc_tickets/             # Ticket Management
 │   └── voice/                   # Voice Processing
 │
-├── ui/console/                  # React Frontend (Port 3000)
+├── frontend/                    # React Frontend (Port 3000)
 │   ├── src/
 │   │   ├── pages/               # Page components
 │   │   │   ├── DashboardPage.tsx
@@ -926,7 +926,7 @@ uvicorn main:app --reload
 uvicorn main:app --reload --port 8000
 
 # Frontend (separate terminal)
-cd ui/console
+cd frontend
 npm run dev
 ```
 

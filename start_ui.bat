@@ -6,5 +6,5 @@ echo   - Frontend: http://localhost:3000
 echo.
 echo Press Ctrl+C to stop the UI server
 echo.
-cd /d "%~dp0\ui\console"
+cd /d "%~dp0\frontend"
 npm run dev

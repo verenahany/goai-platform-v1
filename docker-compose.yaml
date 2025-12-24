@@ -83,7 +83,7 @@ services:
   # ===========================================
   goai_console:
     build:
-      context: ./ui/console
+      context: ./frontend
       dockerfile: Dockerfile
     container_name: goai_console
     ports:
