@@ -3,7 +3,7 @@ RAG Persistent Storage - Database-backed storage for documents and conversations
 """
 
 from typing import List, Dict, Any, Optional
-from uuid import UUID
+# UUID handling for SQLite compatibility - IDs are stored as strings
 from datetime import datetime
 import numpy as np
 import pickle
@@ -91,7 +91,7 @@ class PersistentDocumentStore:
         """Get a document by ID."""
         with self.db.session() as session:
             doc_service = DocumentService(session)
-            doc = doc_service.get(UUID(doc_id))
+            doc = doc_service.get(doc_id)
             
             if doc:
                 return {
@@ -127,7 +127,7 @@ class PersistentDocumentStore:
         """Delete a document and its chunks."""
         with self.db.session() as session:
             doc_service = DocumentService(session)
-            return doc_service.delete(UUID(doc_id))
+            return doc_service.delete(doc_id)
     
     def get_all_chunks(self) -> List[Dict[str, Any]]:
         """Get all chunks for loading into vector store."""
@@ -194,7 +194,7 @@ class PersistentConversationStore:
         """Get a conversation by ID."""
         with self.db.session() as session:
             conv_service = ConversationService(session)
-            conv = conv_service.get(UUID(conv_id))
+            conv = conv_service.get(conv_id)
             
             if conv:
                 messages = conv_service.get_messages(conv.id)
@@ -233,7 +233,7 @@ class PersistentConversationStore:
             msg_role = MessageRole.USER if role == "user" else MessageRole.ASSISTANT
             
             msg = conv_service.add_message(
-                conv_id=UUID(conv_id),
+                conv_id=conv_id,
                 role=msg_role,
                 content=content,
                 model=model,
@@ -264,7 +264,7 @@ class PersistentConversationStore:
         """Delete a conversation."""
         with self.db.session() as session:
             conv_service = ConversationService(session)
-            return conv_service.delete(UUID(conv_id))
+            return conv_service.delete(conv_id)
 
 
 # Singleton instances

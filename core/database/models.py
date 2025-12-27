@@ -1,20 +1,24 @@
 """
 Database Models - SQLAlchemy ORM models for GoAI Platform.
-Supports PostgreSQL with pgvector extension for embeddings.
+Supports both SQLite and PostgreSQL.
 """
 
 from datetime import datetime
 from typing import Optional, List
 from sqlalchemy import (
-    Column, String, Text, Integer, Float, Boolean, DateTime, 
+    Column, String, Text, Integer, Float, Boolean, DateTime,
     ForeignKey, JSON, Index, Enum as SQLEnum, LargeBinary
 )
 from sqlalchemy.orm import relationship, declarative_base
-from sqlalchemy.dialects.postgresql import UUID
 import uuid
 import enum
 
 Base = declarative_base()
+
+
+def generate_uuid():
+    """Generate UUID as string for SQLite compatibility."""
+    return str(uuid.uuid4())
 
 
 # Enums
@@ -50,8 +54,8 @@ class UserRole(enum.Enum):
 class User(Base):
     """User account for authentication and authorization."""
     __tablename__ = "users"
-    
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
     email = Column(String(255), unique=True, nullable=False, index=True)
     username = Column(String(100), unique=True, nullable=False, index=True)
     password_hash = Column(String(255), nullable=False)
@@ -59,20 +63,20 @@ class User(Base):
     role = Column(SQLEnum(UserRole), default=UserRole.USER)
     is_active = Column(Boolean, default=True)
     is_verified = Column(Boolean, default=False)
-    
+
     # Settings
     settings = Column(JSON, default={})
-    
+
     # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     last_login_at = Column(DateTime)
-    
+
     # Relationships
     documents = relationship("Document", back_populates="owner")
     conversations = relationship("Conversation", back_populates="user")
     api_keys = relationship("APIKey", back_populates="user")
-    
+
     def __repr__(self):
         return f"<User {self.username}>"
 
@@ -80,28 +84,28 @@ class User(Base):
 class APIKey(Base):
     """API keys for programmatic access."""
     __tablename__ = "api_keys"
-    
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False)
     name = Column(String(100), nullable=False)
     key_hash = Column(String(255), nullable=False, unique=True)
     key_prefix = Column(String(10), nullable=False)  # First 8 chars for identification
-    
+
     # Permissions
     scopes = Column(JSON, default=["read", "write"])
     rate_limit = Column(Integer, default=1000)  # Requests per hour
-    
+
     # Status
     is_active = Column(Boolean, default=True)
     expires_at = Column(DateTime)
     last_used_at = Column(DateTime)
-    
+
     # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow)
-    
+
     # Relationships
     user = relationship("User", back_populates="api_keys")
-    
+
     def __repr__(self):
         return f"<APIKey {self.key_prefix}...>"
 
@@ -113,9 +117,9 @@ class APIKey(Base):
 class Document(Base):
     """Source document metadata and content."""
     __tablename__ = "documents"
-    
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    owner_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    owner_id = Column(String(36), ForeignKey("users.id"), nullable=True)
     
     # Document info
     filename = Column(String(500), nullable=False, index=True)
@@ -164,8 +168,8 @@ class DocumentChunk(Base):
     """Document chunks with embeddings for vector search."""
     __tablename__ = "document_chunks"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    document_id = Column(UUID(as_uuid=True), ForeignKey("documents.id"), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    document_id = Column(String(36), ForeignKey("documents.id"), nullable=False, index=True)
     
     # Chunk content
     content = Column(Text, nullable=False)
@@ -204,8 +208,8 @@ class Conversation(Base):
     """Chat conversation container."""
     __tablename__ = "conversations"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=True)
     
     # Conversation info
     title = Column(String(500))
@@ -242,8 +246,8 @@ class Message(Base):
     """Individual message in a conversation."""
     __tablename__ = "messages"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    conversation_id = Column(UUID(as_uuid=True), ForeignKey("conversations.id"), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    conversation_id = Column(String(36), ForeignKey("conversations.id"), nullable=False, index=True)
     
     # Message content
     role = Column(SQLEnum(MessageRole), nullable=False)
@@ -279,7 +283,7 @@ class DatabaseSchema(Base):
     """Registered database schemas for SQL Agent."""
     __tablename__ = "database_schemas"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(String(36), primary_key=True, default=generate_uuid)
     
     # Database info
     name = Column(String(100), unique=True, nullable=False, index=True)
@@ -310,8 +314,8 @@ class SQLQuery(Base):
     """Generated SQL queries history."""
     __tablename__ = "sql_queries"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    schema_id = Column(UUID(as_uuid=True), ForeignKey("database_schemas.id"), nullable=True)
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    schema_id = Column(String(36), ForeignKey("database_schemas.id"), nullable=True)
     
     # Query
     question = Column(Text, nullable=False)
@@ -346,7 +350,7 @@ class Workflow(Base):
     """Workflow definitions."""
     __tablename__ = "workflows"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(String(36), primary_key=True, default=generate_uuid)
     
     # Workflow info
     name = Column(String(200), unique=True, nullable=False, index=True)
@@ -381,8 +385,8 @@ class WorkflowRun(Base):
     """Workflow execution history."""
     __tablename__ = "workflow_runs"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    workflow_id = Column(UUID(as_uuid=True), ForeignKey("workflows.id"), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    workflow_id = Column(String(36), ForeignKey("workflows.id"), nullable=False, index=True)
     
     # Execution
     status = Column(String(50), default="pending")  # pending, running, completed, failed
@@ -418,11 +422,11 @@ class AuditLog(Base):
     """Audit trail for all actions."""
     __tablename__ = "audit_logs"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(String(36), primary_key=True, default=generate_uuid)
     
     # Who
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
-    api_key_id = Column(UUID(as_uuid=True), ForeignKey("api_keys.id"), nullable=True)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=True)
+    api_key_id = Column(String(36), ForeignKey("api_keys.id"), nullable=True)
     ip_address = Column(String(45))
     user_agent = Column(String(500))
     
@@ -462,8 +466,8 @@ class UsageMetric(Base):
     """Usage metrics for billing and analytics."""
     __tablename__ = "usage_metrics"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True, index=True)
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=True, index=True)
     
     # Metric
     metric_type = Column(String(100), nullable=False, index=True)  # e.g., "llm_tokens"
@@ -494,7 +498,7 @@ class SystemConfig(Base):
     """System-wide configuration settings."""
     __tablename__ = "system_config"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(String(36), primary_key=True, default=generate_uuid)
     
     key = Column(String(200), unique=True, nullable=False, index=True)
     value = Column(JSON, nullable=False)

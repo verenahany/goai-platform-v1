@@ -201,6 +201,7 @@ Step-back question:"""
         )
 
         # Store chunks in vector retriever (in-memory)
+        print(f"[DEBUG] Vector store check: retriever={self.vector_retriever is not None}, chunks={len(result.chunks) if result.chunks else 0}")
         if self.vector_retriever and result.chunks:
             # Pass pre-computed embeddings if ALL chunks have them (avoid mixed None values)
             embeddings = None
@@ -221,6 +222,7 @@ Step-back question:"""
             )
         
         # Persist to database
+        print(f"[DEBUG] Persistence check: storage={self.use_persistent_storage}, store={self.document_store is not None}, chunks={len(result.chunks) if result.chunks else 0}")
         if self.use_persistent_storage and self.document_store and result.chunks:
             try:
                 chunk_data = [

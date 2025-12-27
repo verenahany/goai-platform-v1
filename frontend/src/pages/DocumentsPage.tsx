@@ -68,8 +68,37 @@ export default function DocumentsPage() {
   const [config, setConfig] = useState<UploadConfig>({ chunkSize: 1000, chunkOverlap: 200 });
   const [previewContent, setPreviewContent] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  
+  const [loadingDocs, setLoadingDocs] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Load documents on mount
+  useEffect(() => {
+    const loadDocuments = async () => {
+      setLoadingDocs(true);
+      try {
+        const response = await ragApi.getDocuments({ limit: 100, group_by_file: true });
+        const docs = response.data.documents || [];
+
+        // Convert backend format to frontend format
+        const convertedDocs: IngestedDoc[] = docs.map((doc: any) => ({
+          id: doc.id,
+          filename: doc.display_name || doc.filename,
+          chunks: doc.chunk_count || 0,
+          status: 'completed',
+          timestamp: new Date(doc.created_at || Date.now()),
+        }));
+
+        setDocuments(convertedDocs);
+      } catch (error) {
+        console.error('Failed to load documents:', error);
+      } finally {
+        setLoadingDocs(false);
+      }
+    };
+
+    loadDocuments();
+  }, []);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -783,10 +812,13 @@ Popular Services:
         </div>
 
         {/* Document Library */}
-        {documents.length > 0 && (
+        {(documents.length > 0 || loadingDocs) && (
           <div className="card" style={{ marginTop: 24 }}>
             <div className="card-header">
-              <h2 className="card-title">Document Library ({documents.length})</h2>
+              <h2 className="card-title">
+                Document Library ({documents.length})
+                {loadingDocs && <Loader2 size={16} className="spinner" style={{ marginLeft: 8 }} />}
+              </h2>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{ position: 'relative' }}>
                   <Search size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />

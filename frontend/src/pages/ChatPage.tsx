@@ -94,7 +94,7 @@ export default function ChatPage() {
   
   const fetchDocuments = async () => {
     try {
-      const response = await ragApi.getDocuments({ limit: 100 });
+      const response = await ragApi.getDocuments({ limit: 100, group_by_file: true });
       const docs = response.data.documents || [];
       setDocuments(docs.map((d: any) => ({
         id: d.id,
@@ -1210,17 +1210,27 @@ export default function ChatPage() {
             }}
             onClick={e => e.stopPropagation()}
           >
-            <div style={{ 
-              padding: '16px 20px', 
+            <div style={{
+              padding: '16px 20px',
               borderBottom: '1px solid var(--border-color)',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
               <h3 style={{ margin: 0 }}>Select Documents</h3>
-              <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>
-                {selectedDocs.size} selected
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>
+                  {selectedDocs.size} selected
+                </span>
+                <button
+                  className="btn btn-sm btn-secondary"
+                  onClick={fetchDocuments}
+                  title="Refresh document list"
+                  style={{ padding: '4px 8px', display: 'flex', alignItems: 'center', gap: 4 }}
+                >
+                  <RefreshCw size={14} />
+                </button>
+              </div>
             </div>
             
             <div style={{ 
