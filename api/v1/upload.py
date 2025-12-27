@@ -124,8 +124,8 @@ async def upload_file(
                         "chunk_index": i,
                         "chunks_in_page": len(chunks)
                     }
-                    
-                    await rag_engine.ingest_document(
+
+                    await rag_engine.ingest(
                         content=chunk,
                         filename=f"{parsed_doc.filename}_p{page.page_number}_c{i}",
                         metadata=chunk_meta
@@ -133,7 +133,7 @@ async def upload_file(
                     total_chunks += 1
             else:
                 # Ingest whole page as one chunk
-                await rag_engine.ingest_document(
+                await rag_engine.ingest(
                     content=page.content,
                     filename=f"{parsed_doc.filename}_p{page.page_number}",
                     metadata=page_metadata
@@ -214,7 +214,7 @@ async def upload_multiple_files(
                 
                 for i, chunk in enumerate(chunks):
                     chunk_meta = {**page_metadata, "chunk_index": i}
-                    await rag_engine.ingest_document(
+                    await rag_engine.ingest(
                         content=chunk,
                         filename=f"{parsed_doc.filename}_p{page.page_number}_c{i}",
                         metadata=chunk_meta
