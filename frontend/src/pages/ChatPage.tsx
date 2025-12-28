@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { Bot, User, FileText, RefreshCw, Cpu, Cloud, ChevronDown, Zap, Database, MessageSquare, Files, Download, FileJson, FileCode, Loader2, ThumbsUp, ThumbsDown, Copy, Check } from 'lucide-react';
 import { useToast } from '../components/Toast';
 import { ragApi, llmApi, getAuthHeaders } from '../api/client';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface Source {
   content: string;
@@ -167,8 +169,10 @@ export default function ChatPage() {
       const response = await ragApi.createConversation();
       setConversationId(response.data.conversation_id);
       setMessages([]);
+      toast.success('New conversation started');
     } catch (error) {
       console.error('Failed to create conversation:', error);
+      toast.error('Failed to create new conversation');
     }
   };
 
@@ -786,37 +790,15 @@ export default function ChatPage() {
       <div className="chat-container">
         <div className="chat-messages" ref={messagesContainerRef} onScroll={handleMessagesScroll}>
           {messages.length === 0 ? (
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '100%',
-              color: 'var(--text-muted)',
-              textAlign: 'center',
-              gap: 24,
-              padding: '0 24px'
-            }}>
-              <div style={{
-                width: 80,
-                height: 80,
-                borderRadius: '50%',
-                background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(124, 58, 237, 0.1))',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <Bot size={40} color="var(--accent-primary)" />
-              </div>
-              <div>
-                <h3 style={{ color: 'var(--text-primary)', marginBottom: 8, fontSize: 24 }}>Start a conversation</h3>
-                <p style={{ maxWidth: 500, fontSize: 15 }}>
-                  Ask questions about your ingested documents. I'll find relevant context and provide answers with source citations.
-                </p>
-              </div>
+            <div className="empty-state">
+             
+              <h2 className="empty-state-title">Start a conversation</h2>
+              <p className="empty-state-description">
+                Ask questions about your documents and get AI-powered answers with sources.
+              </p>
 
               {/* Centered Input Box */}
-              <div style={{ width: '100%', maxWidth: 800 }}>
+              <div className="empty-state-input">
                 <div className="chat-input-wrapper">
                   <input
                     type="text"
@@ -825,7 +807,7 @@ export default function ChatPage() {
                     onKeyPress={handleKeyPress}
                     placeholder="Ask a question about your documents..."
                     disabled={loading}
-                    style={{ flex: 1 }}
+                    autoFocus
                   />
                   <button
                     className="btn btn-primary btn-icon"
@@ -840,13 +822,12 @@ export default function ChatPage() {
                 </div>
               </div>
 
-              {/* Suggested Questions Below Input */}
-              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center', maxWidth: 800 }}>
+              {/* Suggested Questions */}
+              <div className="suggestion-pills">
                 {['What is machine learning?', 'Tell me about Python', 'How does AI work?', 'Explain neural networks'].map((q, i) => (
                   <button
                     key={i}
-                    className="btn btn-secondary"
-                    style={{ fontSize: 13, padding: '8px 16px' }}
+                    className="suggestion-pill"
                     onClick={() => {
                       setInput(q);
                     }}
@@ -865,21 +846,26 @@ export default function ChatPage() {
                   {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
                 </div>
                 <div className="message-content-wrapper">
-                  <div style={{ whiteSpace: 'pre-wrap' }}>
-                    {msg.content}
-                    {msg.isStreaming && (
-                      <span
-                        style={{
-                          display: 'inline-block',
-                          width: 8,
-                          height: 16,
-                          background: 'var(--accent-primary)',
-                          marginLeft: 2,
-                          animation: 'blink 1s infinite'
-                        }}
-                      />
-                    )}
-                  </div>
+                  {msg.isStreaming && !msg.content ? (
+                    <div className="typing-dots">
+                      <div className="typing-dot"></div>
+                      <div className="typing-dot"></div>
+                      <div className="typing-dot"></div>
+                    </div>
+                  ) : (
+                    <div className="message-content">
+                      {msg.role === 'assistant' ? (
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {msg.content}
+                        </ReactMarkdown>
+                      ) : (
+                        <div style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</div>
+                      )}
+                      {msg.isStreaming && (
+                        <span className="streaming-cursor" />
+                      )}
+                    </div>
+                  )}
 
                   {/* Model, Latency & Feedback for assistant messages */}
                   {msg.role === 'assistant' && !msg.isStreaming && (
@@ -914,24 +900,12 @@ export default function ChatPage() {
                       </div>
 
                       {/* Action Buttons */}
-                      <div style={{ display: 'flex', gap: 4 }}>
+                      <div style={{ display: 'flex', gap: 6 }}>
                         {/* Copy Button */}
                         <button
                           onClick={() => copyToClipboard(msg.content, index)}
                           title="Copy response"
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 4,
-                            padding: '4px 8px',
-                            background: copiedIndex === index ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
-                            border: copiedIndex === index ? '1px solid #10b981' : '1px solid var(--border-color)',
-                            borderRadius: 'var(--radius-sm)',
-                            color: copiedIndex === index ? '#10b981' : 'var(--text-muted)',
-                            cursor: 'pointer',
-                            fontSize: 12,
-                            transition: 'all 0.15s ease'
-                          }}
+                          className={`copy-btn ${copiedIndex === index ? 'copied' : ''}`}
                         >
                           {copiedIndex === index ? <Check size={14} /> : <Copy size={14} />}
                         </button>
@@ -940,40 +914,16 @@ export default function ChatPage() {
                         <button
                           onClick={() => handleQuickFeedback(index, 'positive')}
                           title="Good response"
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 4,
-                            padding: '4px 8px',
-                            background: msg.feedback === 'positive' ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
-                            border: msg.feedback === 'positive' ? '1px solid #10b981' : '1px solid var(--border-color)',
-                            borderRadius: 'var(--radius-sm)',
-                            color: msg.feedback === 'positive' ? '#10b981' : 'var(--text-muted)',
-                            cursor: 'pointer',
-                            fontSize: 12,
-                            transition: 'all 0.15s ease'
-                          }}
+                          className={`feedback-btn ${msg.feedback === 'positive' ? 'active-positive' : ''}`}
                         >
-                          <ThumbsUp size={14} fill={msg.feedback === 'positive' ? '#10b981' : 'none'} />
+                          <ThumbsUp size={16} fill={msg.feedback === 'positive' ? '#10b981' : 'none'} />
                         </button>
                         <button
                           onClick={() => handleQuickFeedback(index, 'negative')}
                           title="Bad response"
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 4,
-                            padding: '4px 8px',
-                            background: msg.feedback === 'negative' ? 'rgba(239, 68, 68, 0.2)' : 'transparent',
-                            border: msg.feedback === 'negative' ? '1px solid #ef4444' : '1px solid var(--border-color)',
-                            borderRadius: 'var(--radius-sm)',
-                            color: msg.feedback === 'negative' ? '#ef4444' : 'var(--text-muted)',
-                            cursor: 'pointer',
-                            fontSize: 12,
-                            transition: 'all 0.15s ease'
-                          }}
+                          className={`feedback-btn ${msg.feedback === 'negative' ? 'active-negative' : ''}`}
                         >
-                          <ThumbsDown size={14} fill={msg.feedback === 'negative' ? '#ef4444' : 'none'} />
+                          <ThumbsDown size={16} fill={msg.feedback === 'negative' ? '#ef4444' : 'none'} />
                         </button>
                       </div>
                     </div>
@@ -1028,11 +978,19 @@ export default function ChatPage() {
             </div>
           ))}
 
-          {loading && (
-            <div className="message assistant">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div className="spinner" />
-                <span>Thinking...</span>
+          {loading && messages.length > 0 && !messages[messages.length - 1].isStreaming && (
+            <div className="message assistant message-fade-in">
+              <div className="message-inner">
+                <div className="message-role-label">
+                  <Bot size={16} />
+                </div>
+                <div className="message-content-wrapper">
+                  <div className="typing-dots">
+                    <div className="typing-dot"></div>
+                    <div className="typing-dot"></div>
+                    <div className="typing-dot"></div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
